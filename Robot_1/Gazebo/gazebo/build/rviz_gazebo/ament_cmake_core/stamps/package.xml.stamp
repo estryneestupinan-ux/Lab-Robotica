@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package format="3">
+
+  <name>rviz_gazebo</name>
+  <version>1.0.0</version>
+
+  <description>
+    Simulacion en Gazebo (gz sim) del robot Kinova del paquete 'rviz',
+    con ros2_control y sliders (rqt_joint_trajectory_controller).
+  </description>
+  <maintainer email="est.joan.gomez@unimilitar.edu.co">Joan</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Paquete original: de aqui salen las mallas (meshes) -->
+  <exec_depend>rviz</exec_depend>
+
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>gz_ros2_control</exec_depend>
+  <exec_depend>ros2_control</exec_depend>
+  <exec_depend>ros2_controllers</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>rqt_joint_trajectory_controller</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>
