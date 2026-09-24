@@ -1,0 +1,50 @@
+[0.009s] Invoking command in '/home/joan/Desktop/rviz_gazebo/build/rviz_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/joan/Desktop/rviz_gazebo -DCMAKE_INSTALL_PREFIX=/home/joan/Desktop/rviz_gazebo/install/rviz_gazebo
+[0.962s] -- The C compiler identification is GNU 13.3.0
+[1.807s] -- The CXX compiler identification is GNU 13.3.0
+[1.847s] -- Detecting C compiler ABI info
+[1.932s] -- Detecting C compiler ABI info - done
+[1.940s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.940s] -- Detecting C compile features
+[1.957s] -- Detecting C compile features - done
+[1.968s] -- Detecting CXX compiler ABI info
+[2.044s] -- Detecting CXX compiler ABI info - done
+[2.053s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[2.053s] -- Detecting CXX compile features
+[2.053s] -- Detecting CXX compile features - done
+[2.272s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[2.514s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[2.939s] -- Configuring done (2.6s)
+[2.941s] -- Generating done (0.0s)
+[2.942s] -- Build files have been written to: /home/joan/Desktop/rviz_gazebo/build/rviz_gazebo
+[2.946s] Invoked command in '/home/joan/Desktop/rviz_gazebo/build/rviz_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/joan/Desktop/rviz_gazebo -DCMAKE_INSTALL_PREFIX=/home/joan/Desktop/rviz_gazebo/install/rviz_gazebo
+[2.947s] Invoking command in '/home/joan/Desktop/rviz_gazebo/build/rviz_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/joan/Desktop/rviz_gazebo/build/rviz_gazebo -- -j8 -l8
+[2.977s] Invoked command in '/home/joan/Desktop/rviz_gazebo/build/rviz_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/joan/Desktop/rviz_gazebo/build/rviz_gazebo -- -j8 -l8
+[2.984s] Invoking command in '/home/joan/Desktop/rviz_gazebo/build/rviz_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/joan/Desktop/rviz_gazebo/build/rviz_gazebo
+[2.991s] -- Install configuration: ""
+[2.991s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/launch
+[2.991s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/launch/gazebo.launch.py
+[2.991s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/urdf
+[3.014s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/urdf/rviz.urdf.xacro
+[3.030s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/meshes
+[3.031s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/meshes/2_Link.STL
+[3.061s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/meshes/3_Link.STL
+[3.086s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/meshes/base_link.STL
+[3.130s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/meshes/1_Link.STL
+[3.156s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/config
+[3.170s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/config/controllers.yaml
+[3.179s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/ament_index/resource_index/package_run_dependencies/rviz_gazebo
+[3.179s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/ament_index/resource_index/parent_prefix_path/rviz_gazebo
+[3.180s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/environment/ament_prefix_path.sh
+[3.181s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/environment/ament_prefix_path.dsv
+[3.181s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/environment/path.sh
+[3.182s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/environment/path.dsv
+[3.182s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/local_setup.bash
+[3.182s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/local_setup.sh
+[3.183s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/local_setup.zsh
+[3.183s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/local_setup.dsv
+[3.184s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/package.dsv
+[3.184s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/ament_index/resource_index/packages/rviz_gazebo
+[3.184s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/cmake/rviz_gazeboConfig.cmake
+[3.185s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/cmake/rviz_gazeboConfig-version.cmake
+[3.185s] -- Installing: /home/joan/Desktop/rviz_gazebo/install/rviz_gazebo/share/rviz_gazebo/package.xml
+[3.190s] Invoked command in '/home/joan/Desktop/rviz_gazebo/build/rviz_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/joan/Desktop/rviz_gazebo/build/rviz_gazebo
