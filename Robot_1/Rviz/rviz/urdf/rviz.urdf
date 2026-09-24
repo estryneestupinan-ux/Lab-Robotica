@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="rviz">
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0188945934683048 -9.96369328033047E-06 0.0501441861430258" rpy="0 0 0"/>
+      <mass value="2.07977352462646"/>
+      <inertia
+        ixx="0.00825458902012997"
+        ixy="-2.16225495791191E-06"
+        ixz="0.000945494120881085"
+        iyy="0.0103818175448012"
+        iyz="1.2476805446975E-07"
+        izz="0.0121207604801872"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rviz/meshes/base_link.STL"/>
+      </geometry>
+      <material name="base_material">
+        <color rgba="0.827450980392157 0.666666666666667 0.129411764705882 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rviz/meshes/base_link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <link name="1_Link">
+    <inertial>
+      <origin xyz="7.82266586978055E-10 1.59840470104288E-11 0.122243327100092" rpy="0 0 0"/>
+      <mass value="1.81717907234384"/>
+      <inertia
+        ixx="0.00879812792459193"
+        ixy="-1.6737876940996E-05"
+        ixz="2.33312738691993E-10"
+        iyy="0.00963177077806624"
+        iyz="4.67869054617425E-12"
+        izz="0.00342902544704626"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rviz/meshes/1_Link.STL"/>
+      </geometry>
+      <material name="link1_material">
+        <color rgba="0.827450980392157 0.666666666666667 0.129411764705882 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rviz/meshes/1_Link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="joint_1" type="continuous">
+    <origin
+      xyz="0 0 0.0592515546750892"
+      rpy="0 0 1.57079632893851"/>
+    <parent link="base_link"/>
+    <child link="1_Link"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+
+  <link name="2_Link">
+    <inertial>
+      <origin xyz="0.118305881501537 0.119506214338972 -0.000403424129473845" rpy="0 0 0"/>
+      <mass value="2.80609390433178"/>
+      <inertia
+        ixx="0.011851323145776"
+        ixy="-0.00915616919803687"
+        ixz="3.54238707175848E-05"
+        iyy="0.0140867349666796"
+        iyz="3.13530340652956E-05"
+        izz="0.0223299630276998"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rviz/meshes/2_Link.STL"/>
+      </geometry>
+      <material name="link2_material">
+        <color rgba="0.894117647058823 0.894117647058823 0.894117647058823 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rviz/meshes/2_Link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="joint_2" type="revolute">
+    <origin
+      xyz="0 0 0.18374844532491"
+      rpy="1.5707963267949 0 -3.1215260452769"/>
+    <parent link="1_Link"/>
+    <child link="2_Link"/>
+    <axis xyz="0 0 1"/>
+    <limit
+      lower="-3.14159"
+      upper="3.14159"
+      effort="10"
+      velocity="2.0"/>
+  </joint>
+
+
+  <link name="3_Link">
+    <inertial>
+      <origin xyz="0.00153637588974178 -5.55111512312578E-17 -0.0490296081259685" rpy="0 0 0"/>
+      <mass value="0.644279583763759"/>
+      <inertia
+        ixx="0.00120429088557688"
+        ixy="7.56770998812514E-20"
+        ixz="2.27319893433694E-05"
+        iyy="0.00151696609205997"
+        iyz="-9.14795583034644E-20"
+        izz="0.000912949618673847"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rviz/meshes/3_Link.STL"/>
+      </geometry>
+      <material name="link3_material">
+        <color rgba="1 0.870588235294118 0.529411764705882 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rviz/meshes/3_Link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="joint_3" type="continuous">
+    <origin
+      xyz="0.29764 0.2431 -0.00076819"
+      rpy="-3.0126 -1.5708 3.0556"/>
+    <parent link="2_Link"/>
+    <child link="3_Link"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+</robot>

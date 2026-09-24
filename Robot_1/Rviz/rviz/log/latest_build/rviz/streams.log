@@ -1,0 +1,28 @@
+[0.009s] Invoking command in '/home/joan/Desktop/rviz/build/rviz': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/joan/install/examples_rclpy_pointcloud_publisher:/home/joan/install/examples_rclpy_minimal_subscriber:/home/joan/install/examples_rclpy_minimal_service:/home/joan/install/examples_rclpy_minimal_publisher:/home/joan/install/examples_rclpy_minimal_client:/home/joan/install/examples_rclpy_minimal_action_server:/home/joan/install/examples_rclpy_minimal_action_client:/home/joan/install/examples_rclpy_guard_conditions:/home/joan/install/examples_rclpy_executors:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/joan/Desktop/rviz/build/rviz -- -j8 -l8
+[0.039s] Invoked command in '/home/joan/Desktop/rviz/build/rviz' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/joan/install/examples_rclpy_pointcloud_publisher:/home/joan/install/examples_rclpy_minimal_subscriber:/home/joan/install/examples_rclpy_minimal_service:/home/joan/install/examples_rclpy_minimal_publisher:/home/joan/install/examples_rclpy_minimal_client:/home/joan/install/examples_rclpy_minimal_action_server:/home/joan/install/examples_rclpy_minimal_action_client:/home/joan/install/examples_rclpy_guard_conditions:/home/joan/install/examples_rclpy_executors:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/joan/Desktop/rviz/build/rviz -- -j8 -l8
+[0.046s] Invoking command in '/home/joan/Desktop/rviz/build/rviz': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/joan/install/examples_rclpy_pointcloud_publisher:/home/joan/install/examples_rclpy_minimal_subscriber:/home/joan/install/examples_rclpy_minimal_service:/home/joan/install/examples_rclpy_minimal_publisher:/home/joan/install/examples_rclpy_minimal_client:/home/joan/install/examples_rclpy_minimal_action_server:/home/joan/install/examples_rclpy_minimal_action_client:/home/joan/install/examples_rclpy_guard_conditions:/home/joan/install/examples_rclpy_executors:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/joan/Desktop/rviz/build/rviz
+[0.052s] -- Install configuration: ""
+[0.052s] -- Execute custom install script
+[0.052s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/config/joint_names_rviz.yaml
+[0.052s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/launch/display.launch.py
+[0.053s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/1_Link.STL
+[0.053s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/2_Link.STL
+[0.053s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/3_Link.STL
+[0.053s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/base_link.STL
+[0.053s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/urdf/rviz.urdf
+[0.053s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/ament_index/resource_index/package_run_dependencies/rviz
+[0.053s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/ament_index/resource_index/parent_prefix_path/rviz
+[0.053s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/ament_prefix_path.sh
+[0.053s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/ament_prefix_path.dsv
+[0.054s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/path.sh
+[0.054s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/path.dsv
+[0.054s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.bash
+[0.054s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.sh
+[0.054s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.zsh
+[0.054s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.dsv
+[0.054s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/package.dsv
+[0.061s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/ament_index/resource_index/packages/rviz
+[0.061s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/cmake/rvizConfig.cmake
+[0.061s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/cmake/rvizConfig-version.cmake
+[0.061s] -- Up-to-date symlink: /home/joan/Desktop/rviz/install/rviz/share/rviz/package.xml
+[0.063s] Invoked command in '/home/joan/Desktop/rviz/build/rviz' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/joan/install/examples_rclpy_pointcloud_publisher:/home/joan/install/examples_rclpy_minimal_subscriber:/home/joan/install/examples_rclpy_minimal_service:/home/joan/install/examples_rclpy_minimal_publisher:/home/joan/install/examples_rclpy_minimal_client:/home/joan/install/examples_rclpy_minimal_action_server:/home/joan/install/examples_rclpy_minimal_action_client:/home/joan/install/examples_rclpy_guard_conditions:/home/joan/install/examples_rclpy_executors:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/joan/Desktop/rviz/build/rviz

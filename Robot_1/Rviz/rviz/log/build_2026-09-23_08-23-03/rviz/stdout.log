@@ -1,0 +1,29 @@
+-- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/joan/Desktop/rviz/build/rviz
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/config/joint_names_rviz.yaml
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/launch/display.launch.py
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/1_Link.STL
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/2_Link.STL
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/3_Link.STL
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/base_link.STL
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/urdf/rviz.urdf
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/ament_index/resource_index/package_run_dependencies/rviz
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/ament_index/resource_index/parent_prefix_path/rviz
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/ament_prefix_path.sh
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/ament_prefix_path.dsv
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/path.sh
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/path.dsv
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.bash
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.sh
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.zsh
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.dsv
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/package.dsv
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/ament_index/resource_index/packages/rviz
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/cmake/rvizConfig.cmake
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/cmake/rvizConfig-version.cmake
+-- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/package.xml

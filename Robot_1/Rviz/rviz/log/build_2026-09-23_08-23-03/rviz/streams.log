@@ -1,0 +1,35 @@
+[0.007s] Invoking command in '/home/joan/Desktop/rviz/build/rviz': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/joan/Desktop/rviz -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/joan/Desktop/rviz/install/rviz
+[0.019s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.183s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.344s] -- Configuring done (0.3s)
+[0.346s] -- Generating done (0.0s)
+[0.347s] -- Build files have been written to: /home/joan/Desktop/rviz/build/rviz
+[0.349s] Invoked command in '/home/joan/Desktop/rviz/build/rviz' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/joan/Desktop/rviz -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/joan/Desktop/rviz/install/rviz
+[0.350s] Invoking command in '/home/joan/Desktop/rviz/build/rviz': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/joan/Desktop/rviz/build/rviz -- -j8 -l8
+[0.381s] Invoked command in '/home/joan/Desktop/rviz/build/rviz' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/joan/Desktop/rviz/build/rviz -- -j8 -l8
+[0.389s] Invoking command in '/home/joan/Desktop/rviz/build/rviz': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/joan/Desktop/rviz/build/rviz
+[0.396s] -- Install configuration: ""
+[0.396s] -- Execute custom install script
+[0.396s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/config/joint_names_rviz.yaml
+[0.404s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/launch/display.launch.py
+[0.412s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/1_Link.STL
+[0.420s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/2_Link.STL
+[0.427s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/3_Link.STL
+[0.435s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/meshes/base_link.STL
+[0.443s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/urdf/rviz.urdf
+[0.450s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/ament_index/resource_index/package_run_dependencies/rviz
+[0.458s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/ament_index/resource_index/parent_prefix_path/rviz
+[0.465s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/ament_prefix_path.sh
+[0.473s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/ament_prefix_path.dsv
+[0.480s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/path.sh
+[0.488s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/environment/path.dsv
+[0.495s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.bash
+[0.503s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.sh
+[0.510s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.zsh
+[0.518s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/local_setup.dsv
+[0.528s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/package.dsv
+[0.536s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/ament_index/resource_index/packages/rviz
+[0.544s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/cmake/rvizConfig.cmake
+[0.551s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/cmake/rvizConfig-version.cmake
+[0.558s] -- Symlinking: /home/joan/Desktop/rviz/install/rviz/share/rviz/package.xml
+[0.566s] Invoked command in '/home/joan/Desktop/rviz/build/rviz' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/joan/Desktop/rviz/build/rviz
