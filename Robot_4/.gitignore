@@ -1,0 +1,17 @@
+# ROS2
+build/
+install/
+log/
+__pycache__/
+*.pyc
+
+# ESP32 / C++
+*.elf
+*.bin
+.vscode/
+
+# SolidWorks
+~$*.sldprt
+~$*.sldasm
+~$*.slddrw
+*.bak
