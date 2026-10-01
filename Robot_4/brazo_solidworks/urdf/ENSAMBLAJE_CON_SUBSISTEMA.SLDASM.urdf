@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<robot name="ENSAMBLAJE_CON_SUBSISTEMA.SLDASM">
+
+<link name="world"/>
+<joint name="world_joint" type="fixed">
+  <parent link="world"/>
+  <child link="dummy_link"/>
+</joint>
+
+<link name="dummy_link"/>
+<joint name="dummy_joint" type="fixed">
+  <parent link="dummy_link"/>
+  <child link="base_link"/>
+</joint>
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="-0.000770382670371994 0.00143226822661284 0.0910949271844939" rpy="0 0 0"/>
+    <mass value="0.416986265351324"/>
+    <inertia ixx="0.00112282040355264" ixy="-3.62591337044344E-06" ixz="1.64812355122506E-05" iyy="0.00124692401803346" iyz="-4.41763150972466E-06" izz="0.000823406203246697"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://brazo_solidworks/meshes/base_link.STL"/>
+    </geometry>
+    <material name="">
+      <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+    </material>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://brazo_solidworks/meshes/base_link.STL"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="base_link">
+  <material>Gazebo/Grey</material>
+  <mu1>0.5</mu1>
+  <mu2>0.5</mu2>
+</gazebo>
+
+<link name="Link_1">
+  <inertial>
+    <origin xyz="0.00139690540958726 0.00031599034689303 0.0114072742204556" rpy="0 0 0"/>
+    <mass value="0.380229179237758"/>
+    <inertia ixx="9.53312614220374E-05" ixy="1.78765741739858E-05" ixz="-2.29889711165175E-05" iyy="0.00171420577663468" iyz="-9.1796628561575E-08" izz="0.00177319238592654"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://brazo_solidworks/meshes/Link_1.STL"/>
+    </geometry>
+    <material name="">
+      <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+    </material>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://brazo_solidworks/meshes/Link_1.STL"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="Link_1">
+  <material>Gazebo/Grey</material>
+  <mu1>0.5</mu1>
+  <mu2>0.5</mu2>
+</gazebo>
+
+<joint name="Joint_1" type="continuous">
+  <origin xyz="0 0 0.163" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="Link_1"/>
+  <axis xyz="0 0 1"/>
+</joint>
+
+<link name="Link_2">
+  <inertial>
+    <origin xyz="0.117774098936588 -0.00338370002484566 0.0580899698722614" rpy="0 0 0"/>
+    <mass value="0.33478899949652"/>
+    <inertia ixx="0.000195650698309524" ixy="3.97387138465062E-06" ixz="-1.10963281922699E-06" iyy="0.000671913581221731" iyz="2.02750815323463E-07" izz="0.000622958873729274"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://brazo_solidworks/meshes/Link_2.STL"/>
+    </geometry>
+    <material name="">
+      <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+    </material>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://brazo_solidworks/meshes/Link_2.STL"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="Link_2">
+  <material>Gazebo/Grey</material>
+  <mu1>0.5</mu1>
+  <mu2>0.5</mu2>
+</gazebo>
+
+<joint name="Joint_2" type="continuous">
+  <origin xyz="0.11996 -0.0030923 0.022" rpy="0 0 0"/>
+  <parent link="Link_1"/>
+  <child link="Link_2"/>
+  <axis xyz="0 0 1"/>
+</joint>
+
+<link name="Link_3">
+  <inertial>
+    <origin xyz="-2.59658025014708E-06 -0.000247391116179871 0.0751661308177088" rpy="0 0 0"/>
+    <mass value="0.0456348220099351"/>
+    <inertia ixx="7.83744208712695E-05" ixy="4.57697558476353E-11" ixz="8.95709991008764E-20" iyy="7.83787811384427E-05" iyz="-2.92447850915684E-20" izz="3.26570050607789E-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://brazo_solidworks/meshes/Link_3.STL"/>
+    </geometry>
+    <material name="">
+      <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+    </material>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://brazo_solidworks/meshes/Link_3.STL"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="Link_3">
+  <material>Gazebo/Grey</material>
+  <mu1>0.5</mu1>
+  <mu2>0.5</mu2>
+</gazebo>
+
+<joint name="Joint_3" type="prismatic">
+  <origin xyz="0.15999 -0.0016792 -0.0019747" rpy="0 0 0"/>
+  <parent link="Link_2"/>
+  <child link="Link_3"/>
+  <axis xyz="0 0 -1"/>
+  <limit lower="0" upper="0.105" effort="50" velocity="0.1"/>
+</joint>
+
+<ros2_control name="brazo_r4_system" type="system">
+  <hardware>
+    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    <param name="position_proportional_gain">200.0</param>
+  </hardware>
+  <joint name="Joint_1">
+    <command_interface name="position"/>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Joint_2">
+    <command_interface name="position"/>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+  <joint name="Joint_3">
+    <command_interface name="velocity">
+      <limits enable="false"/>
+    </command_interface>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+    <state_interface name="effort"/>
+  </joint>
+</ros2_control>
+
+<gazebo>
+  <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+    <parameters>/home/burher/ros2_ws/install/brazo_solidworks/share/brazo_solidworks/config/controllers.yaml</parameters>
+  </plugin>
+</gazebo>
+
+</robot>
