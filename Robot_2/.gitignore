@@ -1,0 +1,23 @@
+# ROS 2 y colcon
+**/build/
+**/install/
+**/log/
+
+# Python
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Archivos temporales
+*.log
+*.tmp
+*.bak
+
+# Entornos locales
+.env
+.venv/
+venv/
+
+# MATLAB
+slprj/
+codegen/
