@@ -1,23 +1,4 @@
 #!/usr/bin/env python3
-"""
-Interfaz de control para 5 robots con ROS 2 (rclpy + Tkinter)
-
-Funciones:
-  - Botón "Iniciar secuencia": publica True en TOPICO_INICIO.
-  - Botón "PARADA DE EMERGENCIA" (o tecla Esc / Espacio): publica True en
-    TOPICO_EMERGENCIA y lo sigue re-publicando periódicamente mientras esté activa.
-  - Botón "Rearmar": publica False en TOPICO_EMERGENCIA para liberar la parada.
-  - Indicador por robot: EN MOVIMIENTO / DETENIDO / SIN DATOS.
-
-Lectura del movimiento (elegir con MODO_LECTURA):
-  "bool"         -> cada robot publica std_msgs/Bool en /robotN/en_movimiento
-  "joint_states" -> se lee sensor_msgs/JointState en /robotN/joint_states y se
-                    considera en movimiento si alguna |velocidad| > UMBRAL_VELOCIDAD
-
-Ejecutar:
-  source /opt/ros/<distro>/setup.bash
-  python3 interfaz_robots.py
-"""
 
 import threading
 import time
@@ -31,7 +12,7 @@ from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy, HistoryPo
 from std_msgs.msg import Bool
 from sensor_msgs.msg import JointState
 
-# ======================= CONFIGURACIÓN (editable) =======================
+#  CONFIGURACIÓN (editable) 
 NOMBRES_ROBOTS = ["robot1", "robot2", "robot3", "robot4", "robot5"]
 
 TOPICO_INICIO = "/secuencia/inicio"          # std_msgs/Bool
@@ -45,7 +26,7 @@ UMBRAL_VELOCIDAD = 0.01                      # rad/s o m/s
 TIEMPO_SIN_DATOS = 2.0      # s sin mensajes -> robot marcado "SIN DATOS"
 PERIODO_EMERGENCIA = 0.1    # s entre re-publicaciones de la emergencia
 PERIODO_GUI = 100           # ms entre refrescos de la interfaz
-# ========================================================================
+# ===
 
 
 class NodoControl(Node):
@@ -105,7 +86,7 @@ class NodoControl(Node):
         self.pub_emergencia.publish(Bool(data=False))
         self.get_logger().info("Interfaz de robots lista.")
 
-    # ---------------- callbacks ----------------
+    #  callbacks 
     def _actualizar(self, nombre, en_movimiento):
         with self._lock:
             self.estado[nombre]["movimiento"] = en_movimiento
@@ -115,7 +96,7 @@ class NodoControl(Node):
         if self.emergencia_activa:
             self.pub_emergencia.publish(Bool(data=True))
 
-    # ---------------- acciones desde la GUI ----------------
+    #  acciones desde la GUI 
     def iniciar_secuencia(self):
         if self.emergencia_activa:
             return False
@@ -159,7 +140,7 @@ class Interfaz:
         root.title("Control de secuencia - 5 robots (ROS 2)")
         root.resizable(False, False)
 
-        # ---- Estado de robots ----
+        #  Estado de robots 
         marco_robots = tk.LabelFrame(root, text="Estado de los robots", padx=10, pady=10)
         marco_robots.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky="ew")
 
@@ -174,7 +155,7 @@ class Interfaz:
             etiqueta.grid(row=2, column=i)
             self.indicadores[nombre] = (canvas, circulo, etiqueta)
 
-        # ---- Botones ----
+        #  Botones 
         self.btn_inicio = tk.Button(root, text="Iniciar secuencia", font=("Arial", 12),
                                     width=18, height=2, command=self.on_inicio)
         self.btn_inicio.grid(row=1, column=0, padx=10, pady=5)
@@ -190,7 +171,7 @@ class Interfaz:
                                      command=self.on_rearmar)
         self.btn_rearmar.grid(row=1, column=2, padx=10, pady=5)
 
-        # ---- Barra de estado ----
+        #  Barra de estado 
         self.lbl_estado = tk.Label(root, text="Listo. (Esc o Espacio = emergencia)",
                                    anchor="w", relief="sunken")
         self.lbl_estado.grid(row=2, column=0, columnspan=3, sticky="ew", padx=10, pady=(5, 10))
@@ -202,7 +183,7 @@ class Interfaz:
         root.protocol("WM_DELETE_WINDOW", self.on_cerrar)
         root.after(PERIODO_GUI, self.refrescar)
 
-    # ---------------- eventos ----------------
+    #  eventos 
     def on_inicio(self):
         if self.nodo.iniciar_secuencia():
             self.lbl_estado.config(text=f"Secuencia iniciada - {time.strftime('%H:%M:%S')}")
@@ -230,7 +211,7 @@ class Interfaz:
         if messagebox.askokcancel("Salir", "¿Cerrar la interfaz?"):
             self.root.destroy()
 
-    # ---------------- refresco periódico ----------------
+    #  refresco periódico 
     def refrescar(self):
         for nombre, valor in self.nodo.leer_estados().items():
             canvas, circulo, etiqueta = self.indicadores[nombre]
