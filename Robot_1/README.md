@@ -38,9 +38,9 @@ Además de ejecutar su tarea específica, el Robot 1 forma parte de una planta a
 
 | Elemento | Descripción |
 |---|---|
-| `Diagramas/` | Diagramas relacionados con el sistema y su arquitectura. |
+| `Diagramas/` | Documentos relacionados con el desarrollo del robot. |
 | `Gazebo/` | Archivos y recursos asociados a la simulación. |
-| `Memorias de cálculo/` | Documentación de los cálculos y análisis de ingeniería. |
+| `Memorias de cálculo/` | Códigos usados durante el desarrollo del robot. |
 | `Planos/` | Planos mecánicos del robot. |
 | `Rviz/` | Recursos relacionados con la visualización del modelo. |
 | `ANALISIS_CONTEXTO.pdf` | Documento de análisis del contexto del proyecto. |
@@ -177,6 +177,13 @@ La arquitectura contempla dos niveles:
 **Control del Robot 1:** comprende los componentes responsables de gestionar la tarea, procesar las trayectorias, controlar el movimiento y comunicar los estados relevantes del robot.
 
 **Comunicación a nivel de planta:** el Robot 1 forma parte de una planta automatizada compuesta por varios robots. ROS 2 constituye la infraestructura común para intercambiar información entre los sistemas robóticos y facilitar la coordinación de sus operaciones.
+
+| **Elemento** | **Medio de conexión** | **Función** |
+|---|---|---|
+| ESP32 del Robot 3 | Wi-Fi | Recibe trayectorias, controla actuadores y reporta la posición articular. |
+| Router central | Red local | Conecta los controladores de los robots con los equipos de ROS 2. |
+| Equipos con ROS 2 | Ethernet | Ejecutan el nodo maestro y coordinan la línea robótica. |
+
 ### Diagrama conceptual
 
 ```text
