@@ -137,36 +137,6 @@ d₃ = H_BASE − Z
 | J2 (codo) | [0.2, 1.8] rad |
 | J3 (prismática) | [−0.8, 0.1] m |
 
-**Puntos de la tarea (cinemática directa por tanteo)**
-
-| Posición | J1 (rad) | J2 (rad) | J3 (m) | X (cm) | Y (cm) | Z (cm) |
-|---|---|---|---|---|---|---|
-| Home | 3.142 | 1.800 | 0.100 | −11.59 | −14.61 | 10.50 |
-| Encima de la tapa | −1.443 | 0.918 | 0.100 | 14.88 | −22.40 | 10.50 |
-| Recoger tapa | −1.443 | 0.918 | −0.800 | 14.88 | −22.40 | 1.50 |
-| Encima de la botella | 0.391 | 0.866 | 0.100 | 18.50 | 19.98 | 10.50 |
-| Sellar tapa | 0.391 | 0.866 | −0.800 | 18.50 | 19.98 | 1.50 |
-
-> ⚠️ **Nota sobre J3 en la simulación:** en la tabla cinemática, J3 = 0.100 es la posición alta (*hover*) y −0.800 la de contacto. En el script `secuencia_gui.py` el eje quedó **invertido** (arriba = −0.800, abajo = 0.100), así que la secuencia usa esa convención.
-
----
-
-## 🎛️ Control de bajo nivel (ESP32)
-
-Cada articulación se acciona con un motor DC, driver **TB6612FNG**, encoder incremental y un **ESP32** que ejecuta el lazo de velocidad en tiempo real.
-
-- **Identificación** (MATLAB System Identification, modelo de primer orden, ajuste 83.53 %):
-
-  `G(s) = 0.046814 / (1 + 0.002554·s)`
-
-- **Controlador discreto** diseñado por Lugar Geométrico de las Raíces (ZOH, Ts = 20 ms, 50 Hz):
-
-  `u[k] = u[k−1] + 6.9327 · (e[k] − 0.0435 · e[k−1])`
-
-- **Criterios:** ζ = 0.8, tiempo de establecimiento < 100 ms, error estacionario ≈ 0.
-- **Velocidad:** `RPM = Δpulsos / CPR · 60 / Ts`.
-- Se controla **velocidad** como lazo interno, base para cinemática inversa y planificación de trayectorias.
-
 ---
 
 ## 🛠️ Tecnologías y herramientas
@@ -185,7 +155,7 @@ Cada articulación se acciona con un motor DC, driver **TB6612FNG**, encoder inc
 
 ---
 
-## 📁 Estructura del repositorio
+## 📁 Estructura del repositorio Ros 2
 
 ```
 .
@@ -257,41 +227,6 @@ python3 ~/ros2_ws/src/brazo_solidworks/scripts/secuencia_gui.py
 
 Pulsa **Iniciar Secuencia**. El robot recorre: Home → tapas → bajar → subir con tapa → botella → bajar para sellar → subir → Home.
 
-### ⚙️ Ajustes de `secuencia_gui.py`
-
-| Parámetro | Descripción |
-|---|---|
-| `HZ` | Pasos de interpolación por segundo (30 por defecto) |
-| `USAR_CAMINO_CORTO` | Si es `True`, J1 gira por el camino más corto. Ponlo en `False` si J1 tiene límites en el URDF |
-| Duración por paso | Se define en la lista `secuencia` (tiempo de movimiento y pausa por punto) |
-
-El movimiento usa interpolación *smoothstep* para arrancar y frenar suavemente y respetar el requisito de movimientos sin golpes.
-
----
-
-## 📊 Resultados
-
-### Trayectoria cartesiana en línea recta
-
-- **P₀ = (200, 50, 140) mm → P₁ = (100, 200, 80) mm**, T = 5 s.
-- dt = 0.02 s (50 Hz) → 250 muestras, cinemática inversa en cada punto.
-- Velocidades articulares por diferencias finitas hacia atrás: `dq/dt ≈ (qₖ − qₖ₋₁) / dt`.
-- Torques y fuerzas extraídos de Gazebo mediante la interfaz `effort` de `ros2_control`, declarada en el URDF:
-
-```xml
-<joint name="Joint_1">
-  <state_interface name="position"/>
-  <state_interface name="velocity"/>
-  <state_interface name="effort"/>
-</joint>
-```
-
-| Variable | Comportamiento observado |
-|---|---|
-| X, Y, Z | Perfiles perfectamente lineales (−20, +30 y −12 mm/s) |
-| τ₁ (Joint_1) | Pico de 0.1085 Nm en t = 0.06 s; régimen ≈ 0.0035 Nm |
-| τ₂ (Joint_2) | Pico de 0.919 Nm en t = 0.04 s; régimen ≈ 0.4392 Nm |
-| f₃ (Joint_3) | Constante ≈ −0.4472 N (sostiene el peso del eslabón), poco acoplamiento con J1 y J2 |
 
 ### Conclusiones
 
@@ -300,26 +235,6 @@ El movimiento usa interpolación *smoothstep* para arrancar y frenar suavemente 
 - La trayectoria discretizada a 50 Hz valida la cinemática inversa y permite analizar la dinámica de cada articulación.
 - Hay diferencias entre simulación y hardware por fricción, saturación del PWM, variaciones de carga y ruido de medición.
 
----
-
-## ⚠️ Limitaciones y trabajo futuro
-
-- Sin visión artificial: tapas y envases deben estar en posiciones predefinidas.
-- El efector final está diseñado para un único tipo de tapa.
-- El sistema ejecuta una secuencia programada y no reemplaza la supervisión del operario.
-- Pendiente: integrar la GUI con paro de emergencia, sincronización real con el sensor de presencia del envase y validación completa en hardware.
-
----
-
-## 📚 Documentación
-
-Los informes técnicos están en `/docs`:
-
-- Descripción y requisitos del Robot 4
-- Análisis cinemático por cinemática directa (SCARA vs. antropomórfico)
-- Informe técnico de identificación y control LGR en ESP32
-- Informe de trayectoria cartesiana y análisis dinámico en Gazebo
-- Cartilla técnica del proyecto integrador
 
 ---
 
