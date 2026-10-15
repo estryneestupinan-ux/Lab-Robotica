@@ -1,132 +1,231 @@
-# 🤖 Robot 3 — SCARA de 3 GDL
+# Robot 3: Transporte de Envases a Sellado
 
-## 📌 Descripción
+**Integrantes:** Fabio Alejandro Guerrero Cifuentes - Juan Sebastián Sánchez - Jordy Alberto Mendoza - Julián Santiago Peña
 
-Bienvenido al repositorio del **Robot 3**, un robot tipo **SCARA de 3 Grados de Libertad (3 GDL)** desarrollado como proyecto de robótica y automatización.
+**Manipulador SCARA de dos eslabones encargado de trasladar envases llenos y abiertos desde la estación de llenado hasta la estación de sellado, dentro de una línea robotizada de envasado de aceite coordinada mediante ROS 2.**
 
-El objetivo de este repositorio es documentar el diseño, construcción, programación y funcionamiento del robot, de manera que cualquier persona pueda consultar los planos, códigos y material utilizado durante el desarrollo.
-
----
-
-## 🤖 ¿Qué es un robot SCARA?
-
-Un **SCARA** (*Selective Compliance Assembly Robot Arm*) es un tipo de robot industrial diseñado principalmente para tareas de:
-
-- 🏭 Ensamblaje
-- 📦 Manipulación de objetos
-- 🔄 Movimiento y posicionamiento
-- ⚙️ Automatización de procesos
-- 🎯 Posicionamiento preciso
-
-Nuestro robot cuenta con **3 Grados de Libertad (3 GDL)**, permitiendo controlar diferentes movimientos de sus articulaciones para posicionar el efector final.
+<p align="center">
+  <img src="media/images/render_robot3.png" alt="Render del Robot 3" width="650">
+</p>
 
 ---
 
-## 📂 Contenido del repositorio
+## Descripción
 
-En este repositorio encontrarás toda la información relacionada con el Robot 3:
+El Robot 3 es el tercer eslabón de una línea de cinco manipuladores que automatiza el envasado de aceite. Su tarea es la más sensible al derrame dentro de la línea, porque manipula el envase **lleno y sin tapa**. Por eso el diseño prioriza mantener el envase en posición vertical, limitar las aceleraciones durante el transporte y sincronizarse con los robots adyacentes.
 
-### ⚡ Plano eléctrico
+El proyecto abarca el análisis del contexto de la línea, la arquitectura del sistema y la distribución de la planta. Incluye además el diseño mecánico y eléctrico del robot en SolidWorks, su modelado cinemático directo e inverso con validación, los lazos de control de bajo nivel y la planeación de trayectorias en el espacio articular. El robot se visualizó en RViz y se simuló en Gazebo, integrado a la comunicación ROS 2 - ESP32 de la línea.
 
-Documentación del sistema eléctrico y conexiones utilizadas en el robot.
+### Robot
 
-Incluye:
+| Parámetro | Valor |
+|-----------|-------|
+| Arquitectura | SCARA (RRP) |
+| Grados de libertad | 3 |
+| Eslabones | 2 |
+| Articulaciones | Hombro (rotacional), codo (rotacional), eje Z (prismática) |
+| Actuadores | 2 motores para el giro de los eslabones, 1 motor para el eje prismático, 1 servomotor para la pinza |
+| Efector final | Pinza |
+| Longitud eslabón 1 | [ ] mm |
+| Longitud eslabón 2 | [ ] mm |
+| Carrera eje Z | [ ] mm |
+| Controlador | ESP32 con comunicación Wi-Fi |
+| Límites de velocidad | 2 rad/s (rotacionales), 0.15 m/s (prismática) |
 
-- Conexiones de motores
-- Controladores
-- Alimentación
-- Sensores
-- Microcontrolador
-- Señales de control
-- Diagrama general del sistema
+### Tarea
 
-📁 `Plano_Electrico/`
+| Parámetro | Valor |
+|-----------|-------|
+| Función | Transporte del envase lleno: llenado (PLL) → sellado (PS) |
+| Posición de la base | (0.0, -13.0) cm respecto al centro de la celda |
+| Estación de origen (PLL) | (0.0, +13.0) cm, a 26 cm de la base |
+| Estación de destino (PS) | (0.0, -35.0) cm, a 22 cm de la base |
+| Robot que entrega | R2 (alimentación de envases) |
+| Robot que recibe | R4 (tapado) |
 
----
-
-### 🔩 Plano mecánico
-
-Planos y documentación correspondientes al diseño mecánico del robot SCARA.
-
-Incluye:
-
-- Piezas mecánicas
-- Ensambles
-- Dimensiones
-- Mecanismos
-- Soportes
-- Estructura del robot
-- Diseño CAD
-
-📁 `Plano_Mecanico/`
-
----
-
-### 📖 Cartilla del robot
-
-Material diseñado para explicar el funcionamiento del robot de una manera sencilla y fácil de entender.
-
-La cartilla presenta:
-
-- 🤖 ¿Qué es el robot?
-- ⚙️ ¿Cómo funciona?
-- 🔄 ¿Cómo se mueve?
-- 🚀 Control de velocidad
-- 🎯 Control de los motores
-- 🏭 Aplicaciones de un robot SCARA
-
-📁 `Cartilla/`
+<p align="center">
+  <img src="media/images/foto_robot3.jpg" alt="Robot 3" width="650">
+</p>
 
 ---
 
-### 💨 Código de velocidad de motores
+## Estructura del repositorio
 
-Código utilizado para controlar la **velocidad de los motores** del robot.
-
-En esta sección se encuentran los programas relacionados con:
-
-- Control de velocidad
-- Configuración de motores
-- Parámetros de movimiento
-- Pruebas de velocidad
-
-📁 `Codigo_Velocidad/`
-
----
-
-### 🎮 Código de control de motores
-
-Código utilizado para controlar el movimiento de los motores y las diferentes articulaciones del robot.
-
-Incluye:
-
-- Control de motores
-- Dirección de giro
-- Movimiento de articulaciones
-- Posicionamiento
-- Pruebas de funcionamiento
-
-📁 `Codigo_Control_Motores/`
+- [Descripción](#descripción)
+- [Tecnologías](#tecnologías)
+- [Modelado cinemático](#modelado-cinemático)
+- [Ubicación en la línea](#ubicación-en-la-línea)
+- [Planeación de trayectorias](#planeación-de-trayectorias)
+  - [Cinemática directa](#cinemática-directa)
+  - [Cinemática inversa](#cinemática-inversa)
+  - [Trayectorias en el espacio articular](#trayectorias-en-el-espacio-articular)
+- [Secuencia de operación](#secuencia-de-operación)
+- [Arquitectura](#arquitectura)
+- [Diseño mecánico y eléctrico](#diseño-mecánico-y-eléctrico)
+- [Control](#control)
+- [Modelo URDF](#modelo-urdf)
+- [RViz](#rviz)
+- [Gazebo](#gazebo)
+- [Comunicación](#comunicación)
+- [Cartilla](#cartilla)
 
 ---
 
-## 🧩 Estructura del proyecto
+## Tecnologías
 
-```text
-Robot-3-SCARA-3GDL/
-│
-├── 📁 Plano_Electrico/
-│   └── Planos y diagramas eléctricos
-│
-├── 📁 Plano_Mecanico/
-│   └── Planos y modelos mecánicos
-│
-├── 📁 Cartilla/
-│   └── Cartilla explicativa del robot
-│
-├── 📁 Codigo_Velocidad/
-│   └── Programas para control de velocidad
-│
-├── 📁 Codigo_Control_Motores/
-│   └── Programas para control de motores
+| Área | Herramientas |
+|------|--------------|
+| Diseño mecánico (CAD) | ![SolidWorks](https://img.shields.io/badge/SolidWorks-DA291C?style=flat-square&logo=dassaultsystemes&logoColor=white) |
+| Robótica y simulación | ![ROS 2](https://img.shields.io/badge/ROS_2-22314E?style=flat-square&logo=ros&logoColor=white) ![Gazebo](https://img.shields.io/badge/Gazebo-F58113?style=flat-square&logoColor=white) ![RViz](https://img.shields.io/badge/RViz-22314E?style=flat-square&logoColor=white) |
+| Sistemas embebidos | ![ESP32](https://img.shields.io/badge/ESP32-E7352C?style=flat-square&logo=espressif&logoColor=white) |
+| Programación | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![C++](https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus&logoColor=white) |
+| Entorno de desarrollo | ![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white) ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=ubuntu&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white) |
 
+---
+
+## Modelado cinemático
+
+El robot se modeló como una cadena cinemática serial RRP mediante la convención de Denavit-Hartenberg. Las dos primeras articulaciones son rotacionales con ejes verticales paralelos y ubican el efector final en el plano XY. La tercera es prismática y controla de forma independiente la altura del efector en el eje Z. Gracias a esta configuración, la pinza mantiene siempre la orientación vertical, lo que permite transportar el envase abierto sin inclinarlo.
+
+<p align="center">
+  <img src="media/images/tabla_dh.png" alt="Tabla de Denavit-Hartenberg" width="45%">
+  <img src="media/images/diagrama_cinematico.png" alt="Diagrama cinemático del Robot 3" width="45%">
+</p>
+
+---
+
+## Ubicación en la línea
+
+El Robot 3 ocupa la posición central de la celda (1.25 m x 1.25 m), entre la estación de llenado y la de sellado, ambas alineadas sobre el eje Y. Comparte dos zonas de trabajo con otros robots:
+
+- **Estación de llenado (PLL):** zona compartida con el Robot 2, que deposita allí el envase.
+- **Estación de sellado (PS):** zona compartida con el Robot 4, que coloca la tapa.
+
+<p align="center">
+  <img src="media/images/plano_planta.png" alt="Plano de planta de la línea" width="620">
+</p>
+
+---
+
+## Planeación de trayectorias
+
+Las trayectorias se planean en el espacio articular con perfiles suaves que limitan la aceleración, para evitar oscilaciones del aceite en el envase abierto.
+
+### Cinemática directa
+
+La cinemática directa obtiene la posición del efector final a partir de los valores articulares θ₁, θ₂ y d₃, mediante el producto de las matrices de transformación homogénea de cada eslabón. La posición en el plano depende de los dos ángulos y de la longitud de los eslabones, mientras que la altura depende únicamente del desplazamiento del eje prismático.
+
+Documento: [Cinemática directa (PDF)](docs/cinematica/cinematica_directa.pdf)
+
+### Cinemática inversa
+
+La cinemática inversa calcula los valores articulares necesarios para llevar la pinza a una posición deseada. En el plano XY, los ángulos del hombro y del codo se obtienen de forma geométrica a partir de la posición objetivo, considerando las dos configuraciones posibles del codo. El desplazamiento del eje Z se obtiene directamente de la altura requerida. La solución se validó comparando sus resultados con la cinemática directa en las posiciones de trabajo del robot.
+
+Documento: [Cinemática inversa y validación (PDF)](docs/cinematica/cinematica_inversa.pdf)
+
+### Trayectorias en el espacio articular
+
+Las trayectorias se generan en el espacio de articulaciones entre los puntos clave de la tarea: posición inicial, estación de llenado y estación de sellado. Cada articulación sigue un perfil de movimiento continuo que respeta los límites de velocidad del sistema y evita arranques y frenados bruscos durante el transporte del envase lleno.
+
+Documento: [Planeación de trayectorias (PDF)](docs/trayectorias/planeacion_trayectorias.pdf)
+
+---
+
+## Secuencia de operación
+
+<p align="center">
+  <img src="media/images/secuencia_operacion.png" alt="Secuencia de operación del Robot 3" width="700">
+</p>
+
+---
+
+## Arquitectura
+
+<p align="center">
+  <img src="media/images/diagrama_bloques_r3.png" alt="Diagrama de bloques del Robot 3" width="850">
+</p>
+
+| Bloque | Elementos |
+|--------|-----------|
+| Entradas | Orden del servidor, estado de R2, estado de R4, sensor de presencia en origen, sensores de posición inicial y destino, sensor de agarre |
+| Procesamiento (ESP32) | Recepción de órdenes, lectura de sensores, máquina de estados, planificación de movimiento, control de actuadores, envío de estados |
+| Actuadores | Motor de giro del eslabón 1, motor de giro del eslabón 2, motor del eje prismático, servomotor de la pinza |
+| Salidas | Envase entregado en PS, estado del robot (IDLE, BUSY, ERROR), posición actual, alarmas |
+
+---
+
+## Diseño mecánico y eléctrico
+
+Los planos mecánicos y eléctricos se elaboraron siguiendo las normas [nombre de las normas aplicadas].
+
+### Diseño mecánico
+
+La estructura está compuesta por una base fija con columna, dos eslabones horizontales accionados en el hombro y el codo, y un eje vertical con mecanismo de piñón y cremallera que desplaza la pinza. El recorrido del eje Z se delimita con finales de carrera. La pinza, accionada por un servomotor, se diseñó para la geometría del envase, de modo que lo sujete sin deformarlo y sin permitir desplazamientos laterales.
+
+Documento: [Planos mecánicos (PDF)](docs/planos/planos_mecanicos.pdf)
+
+### Diseño eléctrico
+
+El sistema eléctrico se centraliza en un ESP32, que controla los tres motores de las articulaciones y el servomotor de la pinza, y lee los sensores de presencia, posición y agarre. Los planos incluyen las conexiones de potencia y de control, la alimentación del sistema y el cableado de sensores y actuadores.
+
+Documento: [Planos eléctricos (PDF)](docs/planos/planos_electricos.pdf)
+
+---
+
+## Control
+
+Cada articulación cuenta con un lazo de control de bajo nivel, ejecutado en el ESP32, que lleva el actuador a la posición indicada por la trayectoria. El informe presenta el modelado de los actuadores, el diseño y la sintonización de los controladores, y el análisis de la respuesta obtenida en cada articulación.
+
+Documento: [Informe de control (PDF)](docs/control/informe_control.pdf)
+
+---
+
+## Modelo URDF
+
+El modelo URDF describe el robot para ROS 2 a partir del diseño CAD. Define los eslabones con su geometría visual, de colisión y sus propiedades inerciales, y las articulaciones del robot: dos rotacionales para el hombro y el codo, y una prismática para el eje Z, cada una con sus límites de movimiento y velocidad.
+
+<p align="center">
+  <img src="media/images/urdf_robot3.png" alt="Modelo URDF del Robot 3" width="600">
+</p>
+
+Archivo: [robot3.urdf](ros2_ws/src/robot3_description/urdf/robot3.urdf)
+
+---
+
+## RViz
+
+En RViz se visualiza el modelo URDF del robot para verificar la estructura de eslabones, los marcos de referencia y el rango de movimiento de cada articulación. También se usó para comprobar visualmente los resultados de la cinemática directa e inversa antes de pasar a la simulación física.
+
+<p align="center">
+  <img src="media/images/rviz_robot3.png" alt="Robot 3 en RViz" width="650">
+</p>
+
+Archivo: [robot3.rviz](ros2_ws/src/robot3_description/rviz/robot3.rviz)
+
+---
+
+## Gazebo
+
+En Gazebo se simula el comportamiento físico del robot, con gravedad, inercias y colisiones. Sobre esta simulación se ejecutan las trayectorias planeadas en el espacio de articulaciones para validar el movimiento del robot entre la estación de llenado y la de sellado.
+
+<p align="center">
+  <img src="media/images/gazebo_robot3.png" alt="Robot 3 en Gazebo" width="650">
+</p>
+
+Archivo: [robot3.world](ros2_ws/src/robot3_gazebo/worlds/robot3.world)
+
+---
+
+## Comunicación
+
+| Elemento | Medio de conexión | Función |
+|----------|-------------------|---------|
+| ESP32 del Robot 3 | Wi-Fi | Recibe órdenes, controla los actuadores y reporta estados |
+| Router central | Red local | Enlaza los controladores de los robots con los equipos de ROS 2 |
+| Equipos con ROS 2 | Ethernet | Ejecutan el nodo maestro y la coordinación de la línea |
+
+---
+
+## Cartilla
+
+**[Ver cartilla (PDF)](cartilla/cartilla_robot3.pdf)**
