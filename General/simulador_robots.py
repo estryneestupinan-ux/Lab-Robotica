@@ -1,14 +1,4 @@
 #!/usr/bin/env python3
-"""
-Simulador de 5 robots para probar interfaz_robots.py sin hardware.
-
-- Al recibir True en /secuencia/inicio, los robots se mueven uno tras otro
-  (cada uno DURACION_PASO segundos).
-- Al recibir True en /emergencia, todos se detienen de inmediato y la
-  secuencia se cancela.
-- Publica std_msgs/Bool en /robotN/en_movimiento a 10 Hz.
-"""
-
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
