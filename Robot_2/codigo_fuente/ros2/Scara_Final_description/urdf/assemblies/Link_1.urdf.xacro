@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Link_1_macro">
+
+  <xacro:macro name="Link_1" params="prefix">
+
+    <!-- Links -->
+    <link name="${prefix}Link_1">
+      <inertial>
+        <origin xyz="-0.058611 0.000000 0.030105" rpy="0 0 0"/>
+        <mass value="2.036006"/>
+        <inertia ixx="2.776311e-03" ixy="0.000000e+00" ixz="-9.476064e-05"
+                 iyy="7.494287e-03" iyz="0.000000e+00" izz="6.647105e-03"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.120000 0.000000 0.075300" rpy="-1.570796 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Scara_Final_description/meshes/Link_1/Link_1.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="-0.120000 0.000000 0.075300" rpy="-1.570796 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Scara_Final_description/meshes/Link_1/Link_1.dae" scale="1 1 1"/>
+        </geometry>
+      </collision>
+    </link>
+
+  </xacro:macro>
+
+</robot>

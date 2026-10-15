@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Scara_Final">
+
+  <!-- Materials (shared across all assemblies) -->
+  <material name="Acero">
+    <color rgba="0.627 0.627 0.627 1.0"/>
+  </material>
+
+  <!-- Assembly includes -->
+  <xacro:include filename="$(find Scara_Final_description)/urdf/assemblies/Base_Link.urdf.xacro"/>
+  <xacro:include filename="$(find Scara_Final_description)/urdf/assemblies/Link_1.urdf.xacro"/>
+  <xacro:include filename="$(find Scara_Final_description)/urdf/assemblies/Scara_Final.urdf.xacro"/>
+
+  <!-- Instantiate assemblies -->
+  <xacro:Base_Link prefix=""/>
+  <xacro:Link_1 prefix=""/>
+  <xacro:Scara_Final prefix=""/>
+
+  <!-- Mount joints (cross-assembly connections) -->
+  <!-- These define how assemblies connect to each other. -->
+  <!-- When swapping a dummy assembly with a real part, -->
+  <!-- update the include + macro call above, and adjust -->
+  <!-- parent/child link names in the mount joint below. -->
+
+  <joint name="Revoluci_n_2" type="continuous">
+    <parent link="base_link"/>
+    <child link="Link_1"/>
+    <origin xyz="0.000000 0.067300 0.000000" rpy="1.570796 0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit effort="100.0" velocity="1.00"/>
+  </joint>
+
+  <joint name="Revoluci_n_1" type="continuous">
+    <parent link="Link_1"/>
+    <child link="Base_Link"/>
+    <origin xyz="-0.120000 0.000000 0.073800" rpy="3.141593 0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit effort="100.0" velocity="1.00"/>
+  </joint>
+
+  <!-- ROS 2 control: generated generic system -->
+  <ros2_control name="Scara_Final_system" type="system">
+    <hardware>
+      <plugin>mock_components/GenericSystem</plugin>
+      <param name="cmd_topic">sim/Scara_Final_system/cmd</param>
+      <param name="state_topic">sim/Scara_Final_system/state</param>
+    </hardware>
+
+    <joint name="Revoluci_n_1">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Revoluci_n_2">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </ros2_control>
+
+</robot>

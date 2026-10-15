@@ -1,0 +1,15 @@
+# Joint configuration for joint_state_publisher_gui
+
+joint_state_publisher:
+  ros__parameters:
+    # Joint names and default positions
+    zeros:
+      Corredera_4: 0.0
+      Revoluci_n_1: 0.0
+      Revoluci_n_2: 0.0
+
+    # Joints to publish
+    source_list:
+      - Corredera_4
+      - Revoluci_n_1
+      - Revoluci_n_2

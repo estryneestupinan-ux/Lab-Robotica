@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<robot name="Scara_Final">
+
+  <!-- Fijar la base del SCARA al mundo erguido -->
+  <link name="world"/>
+
+  <joint name="world_to_base" type="fixed">
+  <parent link="world"/>
+  <child link="base_link"/>
+  <!-- Elevamos 0.2 metros en Z -->
+  <origin xyz="0 0 0.1" rpy="1.5708 0 0"/>
+</joint>
+
+  <!-- Materials -->
+  <material name="Acero">
+    <color rgba="0.627 0.627 0.627 1.0"/>
+  </material>
+
+  <link name="base_link">
+    <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="10.0"/>
+    <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+  </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000" rpy="3.141593 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="package://Scara_Final_description/meshes/Scara_Final/base_link.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="Acero"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 0.000000 0.000000" rpy="3.141593 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="package://Scara_Final_description/meshes/Scara_Final/base_link.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="Link_1">
+    <inertial>
+      <origin xyz="-0.058611 0.000000 0.030105" rpy="0 0 0"/>
+      <mass value="2.036006"/>
+      <inertia ixx="2.776311e-03" ixy="0.000000e+00" ixz="-9.476064e-05"
+               iyy="7.494287e-03" iyz="0.000000e+00" izz="6.647105e-03"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.120000 0.000000 0.075300" rpy="-1.570796 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="package://Scara_Final_description/meshes/Link_1/Link_1.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="Acero"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.120000 0.000000 0.075300" rpy="-1.570796 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="package://Scara_Final_description/meshes/Link_1/Link_1.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="Cremallera2">
+    <inertial>
+      <origin xyz="-0.252371 -0.157170 -0.024697" rpy="0 0 0"/>
+      <mass value="0.375726"/>
+      <inertia ixx="3.455143e-05" ixy="1.171535e-06" ixz="1.098812e-06"
+               iyy="4.475029e-04" iyz="2.998619e-08" izz="4.328522e-04"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.308358 -0.165300 -0.009650" rpy="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="package://Scara_Final_description/meshes/Scara_Final/Cremallera2.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="Acero"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.308358 -0.165300 -0.009650" rpy="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="package://Scara_Final_description/meshes/Scara_Final/Cremallera2.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="Base_Link">
+    <inertial>
+      <origin xyz="-0.050226 -0.000558 -0.041507" rpy="0 0 0"/>
+      <mass value="2.923528"/>
+      <inertia ixx="6.273369e-03" ixy="3.683636e-07" ixz="-3.543508e-05"
+               iyy="1.283596e-02" iyz="-3.473510e-05" izz="1.365293e-02"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 -0.075300" rpy="1.570796 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="package://Scara_Final_description/meshes/Base_Link/Base_Link.dae" scale="1 1 1"/>
+      </geometry>
+      <material name="Acero"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 0.000000 -0.075300" rpy="1.570796 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="package://Scara_Final_description/meshes/Base_Link/Base_Link.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="Revoluci_n_2" type="continuous">
+    <parent link="base_link"/>
+    <child link="Link_1"/>
+    <origin xyz="0.000000 0.067300 0.000000" rpy="1.570796 0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit effort="100.0" velocity="1.00"/>
+  </joint>
+
+  <joint name="Corredera_4" type="prismatic">
+    <parent link="base_link"/>
+    <child link="Cremallera2"/>
+    <origin xyz="0.030900 0.291858 0.024300" rpy="0.000000 0.000000 1.570796"/>
+    <axis xyz="1.000000 0.000000 0.000000"/>
+    <limit lower="0.015000" upper="0.040000" effort="100.0" velocity="1.00"/>
+  </joint>
+
+  <joint name="Revoluci_n_1" type="continuous">
+    <parent link="Link_1"/>
+    <child link="Base_Link"/>
+    <origin xyz="-0.120000 0.000000 0.073800" rpy="3.141593 0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit effort="100.0" velocity="1.00"/>
+  </joint>
+
+  <!-- ROS 2 control: Conectado al sistema físico de Gazebo -->
+  <ros2_control name="Scara_Final_system" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+
+    <joint name="Corredera_4">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Revoluci_n_1">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Revoluci_n_2">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </ros2_control>
+
+  <!-- Plugin de Gazebo para cargar controladores -->
+ <gazebo>
+  <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+    <parameters>/home/nou/ros2_ws/src/Scara_Final_description/config/controllers.yaml</parameters>
+  </plugin>
+</gazebo>
+
+</robot>

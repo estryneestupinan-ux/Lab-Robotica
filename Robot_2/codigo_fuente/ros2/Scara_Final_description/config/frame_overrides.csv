@@ -1,0 +1,5 @@
+link,parent_joint,joint_type,rule,original_roll_deg,original_pitch_deg,original_yaw_deg,post_roll_deg,post_pitch_deg,post_yaw_deg,role
+Base_Link,Revoluci_n_1,continuous,auto,0.000000,0.000000,0.000000,-90.000000,0.000000,0.000000,revolute_axis_z
+Cremallera2,Corredera_4,prismatic,keep,0.000000,0.000000,90.000000,0.000000,0.000000,90.000000,unchanged
+Link_1,Revoluci_n_2,continuous,auto,0.000000,0.000000,0.000000,90.000000,0.000000,0.000000,revolute_axis_z
+base_link,,root,auto,180.000000,0.000000,0.000000,0.000000,0.000000,0.000000,root_x_forward_z_up
