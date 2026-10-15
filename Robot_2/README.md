@@ -1,3 +1,5 @@
+## Integrantes : Jaime Estupiñan, Sebastian Landinez, Andres Bustos
+
 # Robot SCARA
 
 ## Descripción general
