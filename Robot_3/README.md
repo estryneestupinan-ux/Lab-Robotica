@@ -25,10 +25,13 @@ El proyecto abarca el análisis del contexto de la línea, la arquitectura del s
 | Eslabones | 2 |
 | Articulaciones | Hombro (rotacional), codo (rotacional), eje Z (prismática) |
 | Actuadores | 2 motores para el giro de los eslabones, 1 motor para el eje prismático, 1 servomotor para la pinza |
+| Sensores | 3 encoders (uno por motor), sensor de efecto Hall (eslabón 1), final de carrera (eslabón 2), 2 finales de carrera (eje prismático) |
 | Efector final | Pinza |
-| Longitud eslabón 1 | [ ] mm |
-| Longitud eslabón 2 | [ ] mm |
-| Carrera eje Z | [ ] mm |
+| Altura de la base | 170.4 mm |
+| Longitud eslabón 1 | 130.0 mm |
+| Longitud eslabón 2 | 147.6 mm |
+| Carrera eje Z | 80 mm |
+| Alcance máximo | 277.6 mm |
 | Controlador | ESP32 con comunicación Wi-Fi |
 | Límites de velocidad | 2 rad/s (rotacionales), 0.15 m/s (prismática) |
 
@@ -37,9 +40,11 @@ El proyecto abarca el análisis del contexto de la línea, la arquitectura del s
 | Parámetro | Valor |
 |-----------|-------|
 | Función | Transporte del envase lleno: llenado (PLL) → sellado (PS) |
-| Posición de la base | (0.0, -13.0) cm respecto al centro de la celda |
-| Estación de origen (PLL) | (0.0, +13.0) cm, a 26 cm de la base |
-| Estación de destino (PS) | (0.0, -35.0) cm, a 22 cm de la base |
+| Posición de la base en la celda | (0.0, -13.0) cm respecto al centro de la celda |
+| HOME | (-15, 10, 0) cm respecto a la base del robot |
+| Estación de origen (PLL) | (0, 26, 0) cm respecto a la base del robot |
+| Estación de destino (PS) | (0, -26, 0) cm respecto a la base del robot |
+| Descenso para tomar y soltar | 8 cm |
 | Robot que entrega | R2 (alimentación de envases) |
 | Robot que recibe | R4 (tapado) |
 
@@ -77,6 +82,7 @@ El proyecto abarca el análisis del contexto de la línea, la arquitectura del s
 |------|--------------|
 | Diseño mecánico (CAD) | ![SolidWorks](https://img.shields.io/badge/SolidWorks-DA291C?style=flat-square&logo=dassaultsystemes&logoColor=white) |
 | Robótica y simulación | ![ROS 2](https://img.shields.io/badge/ROS_2-22314E?style=flat-square&logo=ros&logoColor=white) ![Gazebo](https://img.shields.io/badge/Gazebo-F58113?style=flat-square&logoColor=white) ![RViz](https://img.shields.io/badge/RViz-22314E?style=flat-square&logoColor=white) |
+| Análisis y cálculo | ![MATLAB](https://img.shields.io/badge/MATLAB-0076A8?style=flat-square&logoColor=white) |
 | Sistemas embebidos | ![ESP32](https://img.shields.io/badge/ESP32-E7352C?style=flat-square&logo=espressif&logoColor=white) |
 | Programación | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![C++](https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus&logoColor=white) |
 | Entorno de desarrollo | ![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white) ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=ubuntu&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white) |
@@ -113,28 +119,36 @@ Las trayectorias se planean en el espacio articular con perfiles suaves que limi
 
 ### Cinemática directa
 
-La cinemática directa obtiene la posición del efector final a partir de los valores articulares θ₁, θ₂ y d₃, mediante el producto de las matrices de transformación homogénea de cada eslabón. La posición en el plano depende de los dos ángulos y de la longitud de los eslabones, mientras que la altura depende únicamente del desplazamiento del eje prismático.
+La cinemática directa obtiene la posición del efector final a partir de los valores articulares θ₁, θ₂ y d₃, mediante el producto de las matrices de transformación homogénea de cada eslabón:
 
-Documento: [Cinemática directa (PDF)](docs/cinematica/cinematica_directa.pdf)
+```
+x = L₂·cos(θ₁) + L₃·cos(θ₁ + θ₂)
+y = L₂·sin(θ₁) + L₃·sin(θ₁ + θ₂)
+z = L₁ − d₃
+```
+
+La posición en el plano depende de los dos ángulos y de la longitud de los eslabones, mientras que la altura depende únicamente del desplazamiento del eje prismático. El espacio de trabajo es un anillo de 150.7 mm a 277.6 mm de radio, limitado por el rango del codo, con 80 mm de recorrido vertical.
+
+Código: [cinematica_directa.m](docs/C_directa/cinematica_directa.m)
 
 ### Cinemática inversa
 
 La cinemática inversa calcula los valores articulares necesarios para llevar la pinza a una posición deseada. En el plano XY, los ángulos del hombro y del codo se obtienen de forma geométrica a partir de la posición objetivo, considerando las dos configuraciones posibles del codo. El desplazamiento del eje Z se obtiene directamente de la altura requerida. La solución se validó comparando sus resultados con la cinemática directa en las posiciones de trabajo del robot.
 
-Documento: [Cinemática inversa y validación (PDF)](docs/cinematica/cinematica_inversa.pdf)
+Documento: [Cinemática inversa y validación (PDF)](docs/cinematica_inversa.pdf) · Código: [C_indirecta](docs/C_indirecta/)
 
 ### Trayectorias en el espacio articular
 
-Las trayectorias se generan en el espacio de articulaciones entre los puntos clave de la tarea: posición inicial, estación de llenado y estación de sellado. Cada articulación sigue un perfil de movimiento continuo que respeta los límites de velocidad del sistema y evita arranques y frenados bruscos durante el transporte del envase lleno.
+Las trayectorias se generan en el espacio de articulaciones entre los puntos clave de la tarea: HOME, estación de llenado y estación de sellado. Cada articulación sigue un perfil de movimiento continuo que respeta los límites de velocidad del sistema y evita arranques y frenados bruscos durante el transporte del envase lleno.
 
-Documento: [Planeación de trayectorias (PDF)](docs/trayectorias/planeacion_trayectorias.pdf)
+Documento: [Planeación de trayectorias (PDF)](docs/planeacion_trayectorias.pdf)
 
 ---
 
 ## Secuencia de operación
 
 <p align="center">
-  <img src="media/images/secuencia_operacion.png" alt="Secuencia de operación del Robot 3" width="700">
+  <img src="media/images/secuencia_operacion.png" alt="Secuencia de operación del Robot 3" width="900">
 </p>
 
 ---
@@ -147,10 +161,10 @@ Documento: [Planeación de trayectorias (PDF)](docs/trayectorias/planeacion_tray
 
 | Bloque | Elementos |
 |--------|-----------|
-| Entradas | Orden del servidor, estado de R2, estado de R4, sensor de presencia en origen, sensores de posición inicial y destino, sensor de agarre |
-| Procesamiento (ESP32) | Recepción de órdenes, lectura de sensores, máquina de estados, planificación de movimiento, control de actuadores, envío de estados |
-| Actuadores | Motor de giro del eslabón 1, motor de giro del eslabón 2, motor del eje prismático, servomotor de la pinza |
-| Salidas | Envase entregado en PS, estado del robot (IDLE, BUSY, ERROR), posición actual, alarmas |
+| Entradas | Trayectoria desde ROS 2, sensor de efecto Hall (eslabón 1), final de carrera (eslabón 2), 2 finales de carrera (eje prismático), encoders de los tres motores |
+| Procesamiento (ESP32) | Recepción de comandos, lectura de encoders y sensores, rutina de home, seguimiento de trayectoria, control de posición de los motores, envío de posición a ROS 2 |
+| Actuadores | Motor del eslabón 1, motor del eslabón 2, motor del eje prismático, servomotor de la pinza |
+| Salidas | Envase entregado en PS, posición articular actual |
 
 ---
 
@@ -162,21 +176,21 @@ Los planos mecánicos y eléctricos se elaboraron siguiendo las normas [nombre d
 
 La estructura está compuesta por una base fija con columna, dos eslabones horizontales accionados en el hombro y el codo, y un eje vertical con mecanismo de piñón y cremallera que desplaza la pinza. El recorrido del eje Z se delimita con finales de carrera. La pinza, accionada por un servomotor, se diseñó para la geometría del envase, de modo que lo sujete sin deformarlo y sin permitir desplazamientos laterales.
 
-Documento: [Planos mecánicos (PDF)](docs/planos/planos_mecanicos.pdf)
+Documento: [Planos mecánicos (PDF)](docs/planos_mecanicos.pdf)
 
 ### Diseño eléctrico
 
-El sistema eléctrico se centraliza en un ESP32, que controla los tres motores de las articulaciones y el servomotor de la pinza, y lee los sensores de presencia, posición y agarre. Los planos incluyen las conexiones de potencia y de control, la alimentación del sistema y el cableado de sensores y actuadores.
+El sistema eléctrico se centraliza en un ESP32, que controla los tres motores de las articulaciones y el servomotor de la pinza. Lee los encoders de cada motor y los sensores de home: un sensor de efecto Hall en el eslabón 1, un final de carrera en el eslabón 2 y dos finales de carrera en el eje prismático. Los planos incluyen las conexiones de potencia y de control, la alimentación del sistema y el cableado de sensores y actuadores.
 
-Documento: [Planos eléctricos (PDF)](docs/planos/planos_electricos.pdf)
+Documento: [Planos eléctricos (PDF)](docs/planos_electricos.pdf)
 
 ---
 
 ## Control
 
-Cada articulación cuenta con un lazo de control de bajo nivel, ejecutado en el ESP32, que lleva el actuador a la posición indicada por la trayectoria. El informe presenta el modelado de los actuadores, el diseño y la sintonización de los controladores, y el análisis de la respuesta obtenida en cada articulación.
+Cada articulación cuenta con un lazo de control de bajo nivel, ejecutado en el ESP32, que usa la realimentación de su encoder para llevar el actuador a la posición indicada por la trayectoria. El informe presenta el modelado de los actuadores, el diseño y la sintonización de los controladores, y el análisis de la respuesta obtenida en cada articulación.
 
-Documento: [Informe de control (PDF)](docs/control/informe_control.pdf)
+Documento: [Informe de control (PDF)](docs/informe_control.pdf)
 
 ---
 
@@ -188,7 +202,7 @@ El modelo URDF describe el robot para ROS 2 a partir del diseño CAD. Define los
   <img src="media/images/urdf_robot3.png" alt="Modelo URDF del Robot 3" width="600">
 </p>
 
-Archivo: [robot3.urdf](ros2_ws/src/robot3_description/urdf/robot3.urdf)
+Archivo: [URDF.rar](ros2_ws/URDF.rar)
 
 ---
 
@@ -200,7 +214,7 @@ En RViz se visualiza el modelo URDF del robot para verificar la estructura de es
   <img src="media/images/rviz_robot3.png" alt="Robot 3 en RViz" width="650">
 </p>
 
-Archivo: [robot3.rviz](ros2_ws/src/robot3_description/rviz/robot3.rviz)
+Archivo: [RVIZ.rar](ros2_ws/RVIZ.rar)
 
 ---
 
@@ -212,7 +226,7 @@ En Gazebo se simula el comportamiento físico del robot, con gravedad, inercias 
   <img src="media/images/gazebo_robot3.png" alt="Robot 3 en Gazebo" width="650">
 </p>
 
-Archivo: [robot3.world](ros2_ws/src/robot3_gazebo/worlds/robot3.world)
+Archivo: [GAZEBO.rar](ros2_ws/GAZEBO.rar)
 
 ---
 
@@ -220,7 +234,7 @@ Archivo: [robot3.world](ros2_ws/src/robot3_gazebo/worlds/robot3.world)
 
 | Elemento | Medio de conexión | Función |
 |----------|-------------------|---------|
-| ESP32 del Robot 3 | Wi-Fi | Recibe órdenes, controla los actuadores y reporta estados |
+| ESP32 del Robot 3 | Wi-Fi | Recibe las trayectorias, controla los actuadores y reporta la posición articular |
 | Router central | Red local | Enlaza los controladores de los robots con los equipos de ROS 2 |
 | Equipos con ROS 2 | Ethernet | Ejecutan el nodo maestro y la coordinación de la línea |
 
