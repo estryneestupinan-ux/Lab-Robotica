@@ -326,16 +326,5 @@ El movimiento usa interpolación *smoothstep* para arrancar y frenar suavemente 
 
 ---
 
-## 📚 Documentación
-
-Los informes técnicos están en la carpeta [`Documentos`](Documentos/):
-
-- [Análisis de contexto: robot de tapas en envases de aceite caliente](Documentos/Analisis%20Contexto%20-%20Robot%20tapas%20en%20envases%20de%20aceite%20caliente%201.pdf)
-- [Análisis cinemático por cinemática directa (SCARA vs. antropomórfico)](Documentos/analisis_cinematico_R4-2.pdf)
-- [Informe técnico de identificación y control LGR en ESP32](Documentos/Informe_Tecnico_Lab_Robotica.pdf)
-- [Informe de trayectoria cartesiana y análisis dinámico en Gazebo](Documentos/Informe_Tecnico_SCARA_R4_Trayectoria(1)(1).docx.pdf)
-- [Presentación del proyecto](Documentos/SCARA_Robot4_Presentacion.pptx.pdf)
-
----
 
 *Universidad Militar Nueva Granada · Facultad de Ingeniería · Ingeniería Mecatrónica · Laboratorio de Robótica*
