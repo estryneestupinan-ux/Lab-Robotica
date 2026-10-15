@@ -18,12 +18,10 @@ Diego Burgos · Sergio Boada · Geraldine Suarez · Danna Poveda
 1. [Contexto del proyecto](#-contexto-del-proyecto)
 2. [Arquitectura del sistema](#-arquitectura-del-sistema)
 3. [Modelo cinemático](#-modelo-cinemático)
-4. [Control de bajo nivel (ESP32)](#-control-de-bajo-nivel-esp32)
-5. [Tecnologías](#-tecnologías-y-herramientas)
+4. [Tecnologías](#-tecnologías-y-herramientas)
 6. [Estructura del repositorio](#-estructura-del-repositorio)
 7. [Cómo ejecutar la simulación](#-cómo-ejecutar-la-simulación)
 8. [Resultados](#-resultados)
-9. [Limitaciones y trabajo futuro](#-limitaciones-y-trabajo-futuro)
 
 ---
 
