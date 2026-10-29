@@ -1,5 +1,5 @@
 
-# Robot SCARA
+# Robot_2
 
 ## Integrantes
 - Jaime Estupiñán
@@ -42,7 +42,7 @@ Ingresa a la carpeta del repositorio:
 cd <CARPETA_DEL_REPOSITORIO>
 ```
 
-El comando anterior descarga el repositorio completo del laboratorio. Dentro de él, ubica la carpeta correspondiente al proyecto SCARA.
+El comando anterior descarga el repositorio completo del laboratorio. Dentro de él, ubica la carpeta correspondiente al proyecto Robot_2.
 
 ## Preparación del entorno
 
