@@ -1,0 +1,8 @@
+La GUI mencionada por el usuario: ~/robot2_ws/scripts/puente_trayectoria_con_servos.py
+NO estaba incluida en el ZIP original ni entre los .py cargados en esta conversación.
+Por ello NO se ha reconstruido ni hecho pasar otro programa por la original.
+La carpeta GUI contiene monitor_ros2_gui.py, un monitor alternativo NUEVO y
+EXCLUSIVAMENTE de solo lectura para ROS 2/Gazebo.
+Para recuperar la GUI original desde tu WSL, copia el archivo real al proyecto:
+  cp ~/robot2_ws/scripts/puente_trayectoria_con_servos.py <destino>/robot2_ws/scripts/
+Usa la versión original solo si revisas su comportamiento y compatibilidad.

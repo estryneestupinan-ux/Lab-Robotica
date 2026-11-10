@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="robot2">
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0322183375016077 -0.98862531183593 0.0594360583194767" rpy="0 0 0" />
+      <mass value="1.07274260062099" />
+      <inertia ixx="0.00553256488180712" ixy="3.83547631528998E-05" ixz="8.25731536531113E-06" iyy="0.0068990560243015" iyz="4.5707460594202E-05" izz="0.0111026624784099" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://robot2/meshes/base_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.894117647058823 0.894117647058823 0.894117647058823 1" />
+      </material>
+    </visual>
+    <collision name="base_collision_prueba">
+      <origin xyz="-0.032 -0.980 0.060" rpy="0 0 0" />
+      <geometry>
+        <box size="0.08 0.08 0.04" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="1_Link">
+    <inertial>
+      <origin xyz="-0.000667281126849557 -0.00719445025829268 0.0591226768658543" rpy="0 0 0" />
+      <mass value="0.387314744620051" />
+      <inertia ixx="0.000601133228403725" ixy="3.63272048995032E-06" ixz="7.54613931793443E-06" iyy="0.000802719870296399" iyz="-1.56731747393298E-05" izz="0.000526878986685913" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://robot2/meshes/1_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <collision name="link1_collision_prueba">
+      <origin xyz="0 0 0.045" rpy="0 0 0" />
+      <geometry>
+        <box size="0.035 0.035 0.035" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_1" type="revolute">
+    <origin xyz="-0.0327037847686663 -0.997528688156305 0.103606170155612" rpy="-0.0206714410130467 0.00207951340246256 -0.0021609795475576" />
+    <parent link="base_link" />
+    <child link="1_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.141592653589793" upper="3.141592653589793" effort="10.0" velocity="1.0" />
+  </joint>
+  <link name="2_Link">
+    <inertial>
+      <origin xyz="0.0745958066334341 0.0133639832618666 0.00318731617443128" rpy="0 0 0" />
+      <mass value="0.584726831024462" />
+      <inertia ixx="0.000786949906093475" ixy="1.27945787781936E-05" ixz="1.89713370530281E-06" iyy="0.00135753815336034" iyz="3.25256866578678E-06" izz="0.000908285797238898" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://robot2/meshes/2_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision name="link2_collision_prueba">
+      <origin xyz="0.065 0.013 0.004" rpy="0 0 0" />
+      <geometry>
+        <box size="0.04 0.03 0.03" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_2" type="revolute">
+    <origin xyz="-0.000493066921437857 0.0156172178250403 0.0824999999999999" rpy="-1.46838853558716 -1.55002056607282 -1.67106463249753" />
+    <parent link="1_Link" />
+    <child link="2_Link" />
+    <axis xyz="0.0205940083975399 0.999354388128605 0.0294396628075614" />
+    <limit lower="-1.5707963267948966" upper="1.5707963267948966" effort="10.0" velocity="1.0" />
+  </joint>
+  <link name="3_Link">
+    <inertial>
+      <origin xyz="-0.00271912038517219 0.000532961507388852 -0.0312511977067437" rpy="0 0 0" />
+      <mass value="0.31315904158181" />
+      <inertia ixx="0.000734592294620399" ixy="5.75038039014249E-06" ixz="-1.07783585495597E-05" iyy="0.000474844045702747" iyz="5.1034842522546E-06" izz="0.000320743352058617" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://robot2/meshes/3_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.894117647058823 0.894117647058823 0.894117647058823 1" />
+      </material>
+    </visual>
+    <collision name="link3_collision_prueba">
+      <origin xyz="-0.002 0 -0.030" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.035 0.040" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_3" type="revolute">
+    <origin xyz="0.132335357923373 -0.00290180990379141 0.00593148738303115" rpy="3.14159265358979 0 -1.57079632679489" />
+    <parent link="2_Link" />
+    <child link="3_Link" />
+    <axis xyz="0.999354388128605 0.0205940083975427 0.0294396628075617" />
+    <limit lower="-3.2288591161895095" upper="0.20" effort="10.0" velocity="1.0" />
+  </joint>
+  <link name="4_Link">
+    <inertial>
+      <origin xyz="0.00421078509333189 -0.00283133522060974 -0.0343272190577135" rpy="0 0 0" />
+      <mass value="0.0680040126050669" />
+      <inertia ixx="2.80542295336991E-05" ixy="5.12165349349663E-08" ixz="3.09824065869143E-07" iyy="2.21722694184254E-05" iyz="-3.23876834985772E-07" izz="1.06794281188431E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://robot2/meshes/4_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.8 0.8 0.8 1" />
+      </material>
+    </visual>
+    <collision name="link4_collision_prueba">
+      <origin xyz="0 -0.004 -0.040" rpy="0 0 0" />
+      <geometry>
+        <box size="0.020 0.025 0.030" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint_4" type="revolute">
+    <origin xyz="-0.0048443 -0.0068958 -0.11533" rpy="0 0 1.5708" />
+    <parent link="3_Link" />
+    <child link="4_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.6179938779914944" upper="1.5707963267948966" effort="10.0" velocity="1.0" />
+  </joint>
+  <link name="world" />
+  <joint name="world_to_base" type="fixed">
+    <parent link="world" />
+    <child link="base_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <joint name="joint_1">
+      <command_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">0</param>
+      </state_interface>
+      <state_interface name="velocity" />
+    </joint>
+    <joint name="joint_2">
+      <command_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">0</param>
+      </state_interface>
+      <state_interface name="velocity" />
+    </joint>
+    <joint name="joint_3">
+      <command_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">-3.141592653589793</param>
+      </state_interface>
+      <state_interface name="velocity" />
+    </joint>
+    <joint name="joint_4">
+      <command_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">0</param>
+      </state_interface>
+      <state_interface name="velocity" />
+    </joint>
+  </ros2_control>
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>/home/jandr/robot2_ws/install/robot2/share/robot2/config/controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+</robot>

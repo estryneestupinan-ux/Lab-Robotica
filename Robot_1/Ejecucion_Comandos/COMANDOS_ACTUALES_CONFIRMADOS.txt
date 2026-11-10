@@ -1,0 +1,91 @@
+COMANDOS USADOS ACTUALMENTE EN EL PROYECTO ROBOT2.0
+===================================================
+Esta es una versión consolidada a partir del mensaje del usuario.
+Los comandos que originalmente estaban duplicados o mal continuados han sido corregidos.
+
+TERMINAL 1 — GAZEBO
+source /opt/ros/lyrical/setup.bash
+source ~/robot2_ws/install/setup.bash
+export GZ_SIM_RESOURCE_PATH="$HOME/robot2_ws/src:$HOME/robot2_ws/install/robot2/share:$GZ_SIM_RESOURCE_PATH"
+gz sim -r -v 4 empty.sdf
+
+TERMINAL 2 — PUBLICADOR DE ESTADO
+source /opt/ros/lyrical/setup.bash
+source ~/robot2_ws/install/setup.bash
+ros2 run robot_state_publisher robot_state_publisher \
+  --ros-args \
+  -p robot_description:"$(cat ~/robot2_ws/robot2_giro_135_limite_prueba.urdf)" \
+  -p use_sim_time:=true
+
+TERMINAL 3 — INSTANCIAR ROBOT
+source /opt/ros/lyrical/setup.bash
+source ~/robot2_ws/install/setup.bash
+ros2 run ros_gz_sim create \
+  -world empty -name robot2 \
+  -file ~/robot2_ws/robot2_giro_135_limite_prueba.urdf \
+  -x 0 -y 0 -z 0.05
+
+TERMINAL 4 — CONTROLADORES
+source /opt/ros/lyrical/setup.bash
+source ~/robot2_ws/install/setup.bash
+ros2 run controller_manager spawner joint_state_broadcaster --controller-manager /controller_manager
+ros2 run controller_manager spawner arm_controller \
+  --controller-manager /controller_manager \
+  --param-file ~/robot2_ws/src/robot2/config/controllers.yaml --load-only
+ros2 control set_controller_state arm_controller inactive --controller-manager /controller_manager
+ros2 control set_controller_state arm_controller active --controller-manager /controller_manager
+ros2 control list_controllers
+NOTA: Si ya está cargado y activo, no volver a ejecutar el spawner ni las transiciones.
+
+TERMINAL PARA EJECUTAR TRAYECTORIA
+source /opt/ros/lyrical/setup.bash
+source ~/robot2_ws/install/setup.bash
+python3 ~/robot2_ws/scripts/ejecutar_trayectoria.py --check
+python3 ~/robot2_ws/scripts/ejecutar_trayectoria.py --run
+NOTA: el --run pide escribir SI entre etapas.
+
+TERMINAL 5 — CONEXIÓN ESP32
+Desde Ubuntu: ls -l /dev/ttyUSB0
+Desde POWERSHELL: usbipd list
+Desde POWERSHELL: usbipd attach --wsl --busid 3-2
+Desde POWERSHELL: usbipd detach --busid 3-2
+El BUSID puede cambiar. Cerrar Thonny antes de enlazar a WSL.
+
+PUENTE GENERAL ROS2 ↔ ESP32 (solo con firmware de protocolo compatible)
+source /opt/ros/lyrical/setup.bash
+source ~/robot2_ws/install/setup.bash
+python3 ~/robot2_ws/scripts/ros2_esp32_puente_ack.py \
+  --port /dev/ttyUSB0 --baud 115200 --hz 20 --confirmar-home
+ATENCIÓN: --confirmar-home establece un cero lógico y solo se usa si el robot
+está realmente en HOME, inmóvil y comprobado.
+
+PUENTE PARA SOLO BASE
+source /opt/ros/lyrical/setup.bash
+source ~/robot2_ws/install/setup.bash
+python3 ~/robot2_ws/scripts/puente_ros2_solo_base.py --port /dev/ttyUSB0 --baud 115200 --hz 20
+NOTA: el puente de base archivado y el firmware A/B archivado difieren en protocolo.
+
+PUENTE ACTUAL CON CONTROL CINEMÁTICO + GUI + SERVOS
+source /opt/ros/lyrical/setup.bash
+source ~/robot2_ws/install/setup.bash
+python3 ~/robot2_ws/scripts/puente_trayectoria_con_servos.py --port /dev/ttyUSB0 --gui
+NOTA: el script original está en el WSL del usuario, no en este ZIP.
+
+TRAYECTORIA PEQUEÑA DE ±10° (SIMULACIÓN)
+source /opt/ros/lyrical/setup.bash
+source ~/robot2_ws/install/setup.bash
+ros2 topic pub --once /arm_controller/joint_trajectory \
+  trajectory_msgs/msg/JointTrajectory \
+  "{joint_names: ['joint_1', 'joint_2', 'joint_3', 'joint_4'],
+    points: [
+      {positions: [0.174533, 0.0, -3.141593, 0.0], time_from_start: {sec: 5}},
+      {positions: [0.0, 0.0, -3.141593, 0.0], time_from_start: {sec: 10}},
+      {positions: [-0.174533, 0.0, -3.141593, 0.0], time_from_start: {sec: 15}},
+      {positions: [0.0, 0.0, -3.141593, 0.0], time_from_start: {sec: 20}}
+    ]}"
+
+IMPORTANTE
+No ejecutar dos puentes que abran /dev/ttyUSB0 al mismo tiempo.
+La GUI monitor_ros2_gui.py incluida es una interfaz NUEVA de solo lectura,
+NO el puente GUI original utilizado por el usuario.
+No energizar la trayectoria física automáticamente al iniciar ROS.

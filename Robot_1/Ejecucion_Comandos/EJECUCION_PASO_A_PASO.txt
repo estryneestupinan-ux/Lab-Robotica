@@ -1,0 +1,221 @@
+ROBOT2 — GUÍA DE ARRANQUE ROS 2 LYRICAL / GAZEBO / ESP32
+=========================================================
+Paquete organizado a partir de archivos del ZIP original robot2.0 y
+programas previamente compartidos.
+ACTUALIZADO: comandos de ejecución confirmados por el usuario para Robot2.0. No sustituir un workspace que funciona
+sin hacer copia de seguridad. No se ha podido ejecutar Gazebo en este entorno.
+
+IMPORTANTE SOBRE EL ALCANCE
+---------------------------
+- La simulación HOME -> A -> B -> giro joint_4 -> deshacer -> HOME usa
+  ~/robot2_ws/scripts/ejecutar_trayectoria.py y la trayectoria_A_B_v2.csv.
+- Los puentes ROS2 y firmwares ESP32 incluidos son VERSIONES DIFERENTES.
+  No mezclarlos sin comprobar formato de mensajes.
+- La GUI 'puente_trayectoria_con_servos.py' actualmente usada por el usuario NO
+  vino en la carpeta. Se incluye una GUI nueva de MONITOREO (solo lectura).
+- El firmware main_base_ros2_encoder_AB.py es de recepción con PWM BLOQUEADO.
+  No produce movimiento físico. NO se recomienda ejecutar la trayectoria física
+  completa con un firmware cuyo frenado/inversión no esté validado.
+- Toda orden de HOME_CONFIRM es un cero lógico; no posiciona físicamente el robot.
+- Mantener la potencia de los motores desconectada en ensayos de comunicación;
+  para pruebas mecánicas se requieren supervisión, límites fiables y corte físico.
+
+0. INSTALACIÓN/RESTAURACIÓN INICIAL (una vez)
+---------------------------------------------
+Se recomienda extraer el ZIP y copiar la carpeta robot2_ws al HOME de Ubuntu.
+SIN SOBRESCRIBIR el workspace real sin respaldo:
+  cp -a ~/robot2_ws ~/robot2_ws_RESPALDO
+  cp -a /RUTA/EXTRAIDA/robot2_implementacion/robot2_ws/. ~/robot2_ws/
+
+Verificar archivos:
+  ls ~/robot2_ws/robot2_giro_135_limite_prueba.urdf
+  ls ~/robot2_ws/src/robot2/config/controllers.yaml
+  ls ~/robot2_ws/scripts/ejecutar_trayectoria.py
+  ls ~/robot2_ws/trayectorias/trayectoria_A_B_v2.csv
+
+Construir paquete ROS 2 (para nuevas instalaciones o cambios en src):
+  source /opt/ros/lyrical/setup.bash
+  cd ~/robot2_ws
+  colcon build --symlink-install
+  source ~/robot2_ws/install/setup.bash
+
+PRIMERA TERMINAL — ABRIR GAZEBO / MUNDO
+---------------------------------------
+  source /opt/ros/lyrical/setup.bash
+  source ~/robot2_ws/install/setup.bash
+  export GZ_SIM_RESOURCE_PATH="$HOME/robot2_ws/src:$HOME/robot2_ws/install/robot2/share:$GZ_SIM_RESOURCE_PATH"
+  gz sim -r -v 4 empty.sdf
+
+SEGUNDA TERMINAL — ROBOT STATE PUBLISHER
+----------------------------------------
+  source /opt/ros/lyrical/setup.bash
+  source ~/robot2_ws/install/setup.bash
+  ros2 run robot_state_publisher robot_state_publisher \
+    --ros-args \
+    -p robot_description:="$(cat ~/robot2_ws/robot2_giro_135_limite_prueba.urdf)" \
+    -p use_sim_time:=true
+
+TERCERA TERMINAL — INSTANCIAR ROBOT EN GAZEBO
+---------------------------------------------
+  source /opt/ros/lyrical/setup.bash
+  source ~/robot2_ws/install/setup.bash
+  ros2 run ros_gz_sim create \
+    -world empty \
+    -name robot2 \
+    -file ~/robot2_ws/robot2_giro_135_limite_prueba.urdf \
+    -x 0 -y 0 -z 0.05
+
+CUARTA TERMINAL — CONTROLADORES (NO DUPLICAR EL SPAWNER)
+--------------------------------------------------------
+  source /opt/ros/lyrical/setup.bash
+  source ~/robot2_ws/install/setup.bash
+  ros2 run controller_manager spawner joint_state_broadcaster \
+    --controller-manager /controller_manager
+  ros2 run controller_manager spawner arm_controller \
+    --controller-manager /controller_manager \
+    --param-file ~/robot2_ws/src/robot2/config/controllers.yaml \
+    --load-only
+  ros2 control set_controller_state arm_controller inactive \
+    --controller-manager /controller_manager
+  ros2 control set_controller_state arm_controller active \
+    --controller-manager /controller_manager
+  ros2 control list_controllers
+
+NOTA: Los dos comandos set_controller_state son los que se utilizaron
+históricamente en este entorno. Si arm_controller ya está activo, no
+necesitas repetir spawner ni hacer una segunda activación.
+
+EJECUTAR TRAYECTORIA — EN OTRA TERMINAL
+---------------------------------------
+  source /opt/ros/lyrical/setup.bash
+  source ~/robot2_ws/install/setup.bash
+
+Comprobación sin mover el robot simulado:
+  python3 ~/robot2_ws/scripts/ejecutar_trayectoria.py --check
+
+Ejecución INTERACTIVA (solicita escribir SI entre etapas):
+  python3 ~/robot2_ws/scripts/ejecutar_trayectoria.py --run
+
+La secuencia original comprende:
+  1. HOME -> punto A en 8 s
+  2. A -> B con 341 muestras de MATLAB y duración de 17 s
+  3. Giro de joint_4 ~-135°
+  4. Deshacer el giro
+  5. Regreso a HOME (0°,0°,-180°,0°)
+
+QUINTA TERMINAL — ESP32 / USB EN WSL (OPCIONAL)
+-----------------------------------------------
+En Ubuntu:
+  ls -l /dev/ttyUSB0
+  lsusb
+
+En PowerShell (NO en la terminal bash de Ubuntu):
+  usbipd list
+  usbipd attach --wsl --busid 3-2
+  usbipd detach --busid 3-2
+
+ATENCIÓN: BUSID 3-2 es el utilizado en pruebas anteriores y PUEDE CAMBIAR;
+consultar el valor actual con usbipd list. Cierra Thonny antes de adjuntar.
+
+PUENTE PARA 4 ARTICULACIONES — RECEPTOR DE PRUEBA SIN MOTORES
+------------------------------------------------------------
+Con la potencia de motores desconectada y HOME físico verificado:
+  source /opt/ros/lyrical/setup.bash
+  source ~/robot2_ws/install/setup.bash
+  python3 ~/robot2_ws/scripts/ros2_esp32_puente_ack.py \
+    --port /dev/ttyUSB0 \
+    --baud 115200 \
+    --hz 20 \
+    --confirmar-home
+
+Su protocolo es:
+  REF,seq,base,codo,hombro,muneca
+El archivo principal que se use en ESP32 debe implementar ese protocolo;
+si no, responderá ERR,COMANDO.
+
+PUENTE SOLO BASE — PROTOCOLO DISTINTO
+------------------------------------
+  source /opt/ros/lyrical/setup.bash
+  source ~/robot2_ws/install/setup.bash
+  python3 ~/robot2_ws/scripts/puente_ros2_solo_base.py \
+    --port /dev/ttyUSB0 \
+    --baud 115200 \
+    --hz 20
+
+ATENCIÓN: el puente de base archivado transmite BASE_REF,seq,angulo,
+mientras que main_base_ros2_encoder_AB.py espera REF,seq,base,codo,hombro,muneca.
+NO son directamente compatibles: ver PROTOCOLOS_Y_VERSIONES.txt.
+La versión que modificaste localmente en WSL podría ser distinta.
+
+COMPROBAR CONTROLADOR Y ESTADOS
+------------------------------
+  ros2 control list_controllers
+  ros2 topic echo /joint_states --once
+  ros2 topic info /arm_controller/controller_state
+  ros2 action list
+
+PRUEBA DE TRAYECTORIA PEQUEÑA — SOLO SIMULACIÓN
+-----------------------------------------------
+  ros2 topic pub --once /arm_controller/joint_trajectory \
+    trajectory_msgs/msg/JointTrajectory \
+    "{joint_names: ['joint_1', 'joint_2', 'joint_3', 'joint_4'],
+      points: [
+        {positions: [0.174533, 0.0, -3.141593, 0.0], time_from_start: {sec: 5}},
+        {positions: [0.0, 0.0, -3.141593, 0.0], time_from_start: {sec: 10}},
+        {positions: [-0.174533, 0.0, -3.141593, 0.0], time_from_start: {sec: 15}},
+        {positions: [0.0, 0.0, -3.141593, 0.0], time_from_start: {sec: 20}}
+      ]}"
+
+GUI DE MONITOREO (NUEVA, NO ES LA ORIGINAL DE CONTROL)
+-----------------------------------------------------
+  source /opt/ros/lyrical/setup.bash
+  source ~/robot2_ws/install/setup.bash
+  python3 /RUTA/EXTRAIDA/robot2_implementacion/GUI/monitor_ros2_gui.py
+La GUI recibe /arm_controller/controller_state, muestra referencia,
+feedback y error angular; NO controla motores ni activa servos.
+
+PUENTE ACTUAL CON CONTROL CINEMÁTICO + GUI + SERVOS (ORIGINAL NO INCLUIDO)
+------------------------------------------------------------------------
+  source /opt/ros/lyrical/setup.bash
+  source ~/robot2_ws/install/setup.bash
+  python3 ~/robot2_ws/scripts/puente_trayectoria_con_servos.py --port /dev/ttyUSB0 --gui
+Este es el comando declarado por el usuario como parte de su ejecución actual.
+SOLO funcionará en el WSL que conserva el archivo original; no fue aportado
+al ZIP y no se ha recuperado su contenido exacto. No reemplazarlo por la
+GUI de monitoreo de solo lectura incluida en este paquete.
+Ejecutar un solo proceso que abra /dev/ttyUSB0 a la vez: NO abrir en paralelo
+ros2_esp32_puente_ack.py, puente_ros2_solo_base.py y este puente de GUI.
+
+MATLAB — FUENTES ORIGINALES
+--------------------------
+  MATLAB/cinematica_inversa.m
+  MATLAB/cinematica_inversa_b.m
+  MATLAB/cinematica_robot2.m
+  MATLAB/trayectorias_a_b.m
+  MATLAB/exportar_csv.m
+La trayectoria CSV original que ejecuta ROS2 ya está incluida.
+
+RESUMEN DE RUTAS CLAVE
+----------------------
+ ~/robot2_ws/robot2_giro_135_limite_prueba.urdf
+ ~/robot2_ws/src/robot2/config/controllers.yaml
+ ~/robot2_ws/src/robot2/meshes/*.STL
+ ~/robot2_ws/scripts/ejecutar_trayectoria.py
+ ~/robot2_ws/trayectorias/trayectoria_A_B_v2.csv
+
+ANEXO — COMANDOS VIGENTES INFORMADOS POR EL USUARIO
+--------------------------------------------------
+1) Primera terminal: Gazebo (gz sim -r -v 4 empty.sdf).
+2) Segunda terminal: robot_state_publisher usando robot2_giro_135_limite_prueba.urdf.
+3) Tercera terminal: ros_gz_sim create en world empty, robot2 a z=0.05.
+4) Cuarta terminal: joint_state_broadcaster y arm_controller con controllers.yaml.
+   CORRECCIÓN: invocar spawner una sola vez; usar --controller-manager en
+   CADA comando; verificar con ros2 control list_controllers. Ver bloque anterior.
+5) Terminal de trayectorias: ejecutar_trayectoria.py --run. Solicita SI entre fases.
+6) Quinta terminal, conexión física opcional: primero usbipd desde PowerShell;
+   después ejecutar UNO de los puentes seriales desde Ubuntu.
+7) Puente GUI con servos que utiliza el usuario: 
+   python3 ~/robot2_ws/scripts/puente_trayectoria_con_servos.py --port /dev/ttyUSB0 --gui
+   (script NO recuperado; copiar desde WSL actual antes de migrar).
+8) Trayectoria pequeña ±10 grados: disponible arriba para SIMULACIÓN; no
+   activarla sobre el robot físico sin verificación de topes y parada.

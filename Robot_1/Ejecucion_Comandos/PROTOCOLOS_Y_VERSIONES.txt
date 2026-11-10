@@ -1,0 +1,38 @@
+PROTOCOLOS Y ARCHIVOS (NO MEZCLAR FIRMWARE Y PUENTES SIN REVISAR)
+================================================================
+Archivo ROS2 ros2_esp32_puente_ack.py:
+    ENVÍA  REF,seq,base,codo,hombro,muneca
+    Puede enviar HOME_CONFIRM al inicio mediante --confirmar-home.
+    Es puente de PRUEBA, no valida ni habilita movimiento físico.
+
+Archivo ROS2 puente_ros2_solo_base.py (original conservado):
+    ENVÍA  BASE_REF,seq,angulo
+    NO envía ARM_BASE ni ARM_ALL.
+    Compatible originalmente con receptor de base que interpretaba BASE_REF.
+
+Archivo ESP32 main_base_ros2_encoder_AB.py:
+    ESPERA REF,seq,base,codo,hombro,muneca
+    Responde STATUS, ACK, ERR; requiere HOME_CONFIRM.
+    PWM BLOQUEADO (sin accionamiento físico).
+    Encoder A=GPIO32 B=GPIO33 propuesto.
+
+Archivo ESP32 main_receptor_solo_base.py:
+    Receptor sin PWM; revisar su gramática para emparejar puente.
+
+Archivos ESP32 main_ros2_5actuadores.py y main_robot2_integracion.py:
+    Se conservan como REFERENCIA HISTÓRICA. NO son garantía de control físico
+    seguro; hubo fallos de parada/inversión en codo/hombro durante ensayos.
+
+GUI_original puente_trayectoria_con_servos.py:
+    NO DISPONIBLE entre los archivos efectivamente entregados.
+    GUI/monitor_ros2_gui.py es una GUI NUEVA solo lectura, no su reemplazo.
+
+Trayectoria principal:
+    robot2_ws/scripts/ejecutar_trayectoria.py
+    robot2_ws/trayectorias/trayectoria_A_B_v2.csv
+    Espera confirmaciones SI para avanzar entre fases.
+
+Importante: la GUI, el puente y el main.py que estén ACTUALMENTE en WSL
+podrían tener ediciones locales posteriores a las copias del ZIP. Compara
+antes de restaurar. En particular las versiones del puente solo base se
+modificaron manualmente del protocolo BASE_REF a REF en pruebas anteriores.
