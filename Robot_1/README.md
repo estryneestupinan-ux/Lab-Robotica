@@ -213,7 +213,9 @@ Posteriormente, los archivos de trayectoria se ejecutan mediante ROS 2, permitie
 
 ## Modelo cinemático
 
-Para el posicionamiento del extremo se desacopla `θ4`, que permite orientar la herramienta, y se trabaja con un modelo equivalente de tres grados de libertad.
+## Modelo cinemático
+
+Para el posicionamiento del extremo se desacopla `θ4`, que solo orienta la herramienta, y se trabaja con un modelo equivalente de 3 GDL con `d1 = 0,200 m`, `a2 = 0,150 m` y `a3 = 0,150 m` (ver [`COMPARACION_CINEMATICA_INVERSA_DIRECTA.pdf`](./Diagramas/COMPARACION_CINEMATICA_INVERSA_DIRECTA.pdf)).
 
 ### Parámetros geométricos
 
@@ -223,74 +225,44 @@ Para el posicionamiento del extremo se desacopla `θ4`, que permite orientar la 
 | `a2` | Longitud del segundo eslabón | 0,150 m |
 | `a3` | Longitud del tercer eslabón | 0,150 m |
 
-### Cinemática directa
+****Cinemática directa****
 
-La posición del extremo del manipulador se determina mediante:
+```text
 
-\[
-r = a_2\cos(\theta_2)+a_3\cos(\theta_2+\theta_3)
-\]
+r = a2·cos(θ2) + a3·cos(θ2 + θ3)
 
-\[
-X=r\cos(\theta_1)
-\]
+X = r·cos(θ1)
 
-\[
-Y=r\sin(\theta_1)
-\]
+Y = r·sin(θ1)
 
-\[
-Z=d_1+a_2\sin(\theta_2)+a_3\sin(\theta_2+\theta_3)
-\]
+Z = d1 + a2·sin(θ2) + a3·sin(θ2 + θ3)
 
-### Cinemática inversa (configuración codo abajo)
+```
 
-Para determinar las variables articulares a partir de una posición cartesiana deseada:
+****Cinemática inversa**** (codo abajo)
 
-\[
-\theta_1=\operatorname{atan2}(Y,X)
-\]
+```text
 
-\[
-r=\sqrt{X^2+Y^2}
-\]
+θ1 = atan2(Y, X)
 
-\[
-s=Z-d_1
-\]
+r  = √(X² + Y²),   s = Z − d1
 
-\[
-D=\frac{r^2+s^2-a_2^2-a_3^2}{2a_2a_3}
-\]
+D  = (r² + s² − a2² − a3²) / (2·a2·a3)
 
-\[
-\theta_3=\operatorname{atan2}(-\sqrt{1-D^2},D)
-\]
+θ3 = atan2(−√(1 − D²), D)
 
-\[
-\theta_2=
-\operatorname{atan2}(s,r)
--
-\operatorname{atan2}
-\left(
-a_3\sin(\theta_3),
-a_2+a_3\cos(\theta_3)
-\right)
-\]
+θ2 = atan2(s, r) − atan2(a3·sin θ3, a2 + a3·cos θ3)
 
-### Control cinemático mediante Jacobiano
+```
 
-El control de velocidad articular se plantea mediante el Jacobiano:
+****Jacobiano.**** Para el seguimiento cartesiano se usó control cinemático con la pseudoinversa del Jacobiano geométrico:
 
-\[
-\dot{q}=J^\dagger(q)\left(v_{ff}+K_p e\right)
-\]
+```text
 
-La actualización de las posiciones articulares se realiza mediante:
+q̇ = J†(q) · (v_ff + Kp·e)        q(k+1) = q(k) + q̇·Δt
 
-\[
-q(k+1)=q(k)+\dot{q}\Delta t
-\]
+```
+En la validación de una trayectoria por Jacobiano inverso (versión 1, en simulación) el error máximo fue de unos 0,48 mm y la velocidad articular máxima de unos 8,9 °/s. Estos valores no son una validación del robot físico V2.
 
 En MATLAB se desarrollaron los cálculos de cinemática directa e inversa y la generación de trayectorias para el manipulador.
 
