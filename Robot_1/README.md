@@ -2,7 +2,7 @@
 
 <p align="center">
 
-  <img src="./Imagenes/robot_v2_fisico.png" alt="Robot 1 versión 2, ensamblado" height="420">
+  <img src="./Diagramas/Ensamblaje.jpeg" alt="Robot 1 versión 2, ensamblado" height="420">
 
 </p>
 
@@ -10,7 +10,6 @@
 
 Manipulador articulado de 4 grados de libertad más pinza, diseñado para tomar un recipiente con aceite, trasladarlo, inclinarlo para verter su contenido y regresar a una posición segura. Es la primera estación de una línea robotizada de producción y envasado de aceite compuesta por cinco robots.
 
-**---**
 
 ## Contenido
 
@@ -38,49 +37,26 @@ Manipulador articulado de 4 grados de libertad más pinza, diseñado para tomar 
 
 12. [Equipo](#equipo)
 
-**---**
 
 ## Estado del proyecto
 
 El robot ha tenido dos versiones. La primera sirvió para validar la metodología (cinemática, trayectorias, simulación y control de motores), pero su transmisión por poleas y correa no permitía garantizar repetibilidad. La segunda reemplaza las poleas por engranajes y es la que se muestra en la foto principal.
 
-| | Versión 1 | Versión 2 (actual) |
 
-|---|---|---|
 
-| Aspecto | Negro, brazo largo con correas | Rojo, compacto, base cilíndrica |
+| Aspecto | Negro, brazo largo| Rojo, compacto, base cilíndrica |
 
-| Transmisión | Poleas y correa | Engranajes (trenes planetarios en base y codo) |
-
-| Problema encontrado | La correa no entraba bien en fricción con la polea y un engranaje interno falló | En integración y validación |
+| Transmisión | Engranajes Planetarios |
 
 | Cinemática y trayectorias | Desarrolladas y validadas en simulación | Rehechas para la nueva geometría |
 
-| Estado | Fabricada; sirvió de base metodológica | Ensamblada y puesta en funcionamiento; proceso individual ejecutado y validado mediante ROS 2 |
+| Estado |Ensamblada y puesta en funcionamiento; proceso individual ejecutado y validado mediante ROS 2 |
 
-<table>
 
-  <tr>
-
-    <td *align*="center"><img src="./Imagenes/robot_v1_fisico.jpg" height="260"><br><sub>V1 — montaje de pruebas</sub></td>
-
-    <td *align*="center"><img src="./Imagenes/robot_v1_agarre_botella.jpg" height="260"><br><sub>V1 — agarre de una botella</sub></td>
-
-    <td *align*="center"><img src="./Imagenes/robot_v2_cad.png" height="260"><br><sub>V2 — modelo CAD</sub></td>
-
-  </tr>
-
-</table>
-
-Los resultados de V1 se conservaron como evidencia del proceso y por eso algunos documentos de `Diagramas/` todavía se refieren a esa versión.
-
-<p align="center">
-  <img src="./Diagramas/Ensamblaje.jpeg" alt="Ensamblaje completo del Robot 1" width="640">
-</p>
+Los resultados de V1 se conservaron como evidencia del proceso y por eso algunos documentos de `Diagramas/` todavía se refieren a esa versiones anteriores.
 
 <p align="center"><em>Ensamblaje completo del manipulador Robot 1.</em></p>
 
-**---**
 
 ## Función dentro de la planta
 
@@ -88,7 +64,6 @@ La línea ocupa un área de 1,25 m × 1,25 m y está pensada para reducir la exp
 
 | Robot | Etapa |
 
-|---|---|
 
 | ****Robot 1**** | ****Transferencia de aceite del tanque inicial al tanque de enfriamiento**** |
 
@@ -122,15 +97,12 @@ Secuencia de operación del Robot 1:
 
 7. Deshace el giro y vuelve a HOME.
 
-**---**
 
 ## Especificaciones
 
 | Característica | Valor |
 
-|---|---|
-
-| Grados de libertad | 4 articulaciones rotacionales + pinza |
+| Grados de libertad | 4 articulaciones rotacionales + pinza|
 
 | Efector final | Pinza accionada por servo |
 
@@ -154,7 +126,6 @@ Límites definidos en `robot2_ws/robot2_giro_135_limite_prueba.urdf`. Son provis
 
 | Articulación | Función | Rango (°) |
 
-|---|---|---|
 
 | `joint_1` | Giro de la base (eje Z) | −180 a 180 |
 
@@ -164,7 +135,7 @@ Límites definidos en `robot2_ws/robot2_giro_135_limite_prueba.urdf`. Son provis
 
 | `joint_4` | Giro de la muñeca (inclinación del recipiente) | −150 a 90 |
 
-**---**
+
 
 ## Estructura del repositorio
 
@@ -198,13 +169,6 @@ Robot_1/
 
 | Carpeta | Contenido | README |
 
-|---|---|---|
-
-| `Imagenes/` | Fotos del robot físico, CAD y capturas de Gazebo | [Ver](./Imagenes/README.md) |
-
-| `Diagramas/` | Diagramas de planta y de proceso, cartilla y reportes en PDF | [Ver](./Diagramas/README.md) |
-
-| `Piezas_Robot/` | Piezas STEP, componentes electrónicos y URDF original | [Ver](./Piezas_Robot/README.md) |
 
 | `Calculos_Matlab/` | Scripts de cinemática y planeación | [Ver](./Calculos_Matlab/README.md) |
 
@@ -218,7 +182,6 @@ Robot_1/
 
 | `Ejecucion_Comandos/` | Procedimiento de arranque | [Ver](./Ejecucion_Comandos/README.md) |
 
-**---**
 
 ## Flujo de trabajo
 
@@ -253,8 +216,6 @@ El modelo exportado se importa en MATLAB, donde se calcula la trayectoria. El CS
   <img src="./Diagramas/Secuencia%20de%20proceso.png" alt="Diagrama de bloques del sistema" width="420">
 
 </p>
-
-**---**
 
 ## Modelo cinemático
 
@@ -316,7 +277,6 @@ Trayectoria de demostración HOME → A → B → vertido → HOME.
 
 | Fase | Movimiento | Duración |
 
-|---|---|---|
 
 | 1 | HOME → punto A | 8 s |
 
@@ -330,13 +290,10 @@ Trayectoria de demostración HOME → A → B → vertido → HOME.
 
 Puntos de trabajo usados en MATLAB: ****A = (0,28; 0,19; 0,16) m**** y ****B = (−0,34; 0; 0,25) m****. La trayectoria incluye una elevación vertical inicial de 5 cm y un recogimiento del brazo antes de girar hacia B. MATLAB no verificó colisiones, por lo que debe revisarse en simulación antes de ejecutarla. Detalles en [`Trayectorias/`](./Trayectorias/README.md).
 
-**---**
 
 ## Electrónica y control
 
 | Elemento | Detalle |
-
-|---|---|
 
 | Microcontrolador | ESP32, firmware en MicroPython |
 
@@ -356,8 +313,6 @@ Correspondencia entre articulaciones de ROS 2 y actuadores, según el protocolo 
 
 | Articulación ROS 2 | Actuador | Pines (IN1 / IN2 / PWM / ENC) |
 
-|---|---|---|
-
 | `joint_1` | Motor BASE | 25 / 26 / 27 / 32 |
 
 | `joint_2` | Motor CODO | 19 / 21 / 18 / 34 |
@@ -369,8 +324,6 @@ Correspondencia entre articulaciones de ROS 2 y actuadores, según el protocolo 
 | Pinza | Servo SG90 (GPIO 13), comando independiente `GRIP,ángulo` | — |
 
 Los nombres CODO y HOMBRO siguen la convención del firmware. Los detalles de cada versión del firmware están en [`ESP32/`](./ESP32/README.md).
-
-**---**
 
 ## Cómo ejecutar
 
@@ -398,7 +351,6 @@ python3 \~/robot2_ws/scripts/ejecutar_trayectoria.py --run
 
 El modo `--run` pide escribir `SI` entre fases.
 
-**---**
 
 ## Seguridad
 
@@ -412,11 +364,10 @@ El modo `--run` pide escribir `SI` entre fases.
 
 - Los límites articulares son provisionales. Verificar los topes reales antes de cualquier prueba física.
 
-**## Documentos
 
 | Documento | Descripción |
 
-|---|---|
+
 
 | [`ANALISIS_CONTEXTO.pdf`](./ANALISIS_CONTEXTO.pdf) | Contexto y distribución de funciones de los cinco robots |
 
@@ -428,7 +379,6 @@ El modo `--run` pide escribir `SI` entre fases.
 
 | [`COMPARACION_CINEMATICA_INVERSA_DIRECTA.pdf`](./Diagramas/COMPARACION_CINEMATICA_INVERSA_DIRECTA.pdf) | Validación de la cinemática directa e inversa |
 
-**---**
 
 ## Equipo
 
