@@ -217,7 +217,11 @@ Gazebo es el entorno donde se simula la celda completa: los 5 robots, las estaci
 
 ### 1. Simulación
 
-[Arrastrar aquí el video de la simulación al editar este README en GitHub]
+
+
+https://github.com/user-attachments/assets/7a068337-a0e2-43c6-9f57-49952147cd16
+
+
 
 **Qué se ve en el video**
 
