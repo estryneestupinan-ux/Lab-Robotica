@@ -1,10 +1,6 @@
 # Robot 1 — Manipulador para la transferencia de aceite
 
 <p align="center">
-  <img src="./Imagenes/robot_v2_cad.png" alt="Robot 1" width="500">
-</p>
-
-<p align="center">
   <strong>Manipulador articulado de 4 grados de libertad más pinza</strong>
 </p>
 
