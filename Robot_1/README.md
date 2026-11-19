@@ -117,29 +117,17 @@ La línea de producción ocupa un área de **1,25 m × 1,25 m** y está compuest
 
 ## Estructura del repositorio
 
-```text
-Robot_1/
-│
-├── Imagenes/
-│
-├── Documentacion/
-│
-├── Piezas_Robot/
-│
-├── Calculos_Matlab/
-│
-├── Trayectorias/
-│
-├── ROS_2/
-│
-├── ESP32/
-│
-├── GUI/
-│
-├── Ejecucion_Comandos/
-│
-└── ANALISIS_CONTEXTO.pdf
-```
+* [Robot_1/](Robot_1/)
+  * [Imagenes/](Robot_1/Imagenes/)
+  * [Documentacion/](Robot_1/Documentacion/)
+  * [Piezas_Robot/](Robot_1/Piezas_Robot/)
+  * [Calculos_Matlab/](Robot_1/Calculos_Matlab/)
+  * [Trayectorias/](Robot_1/Trayectorias/)
+  * [ROS_2/](Robot_1/ROS_2/)
+  * [ESP32/](Robot_1/ESP32/)
+  * [GUI/](Robot_1/GUI/)
+  * [Ejecucion_Comandos/](Robot_1/Ejecucion_Comandos/)
+  * [ANALISIS_CONTEXTO.pdf](Robot_1/ANALISIS_CONTEXTO.pdf)
 
 ### Descripción de las carpetas
 
@@ -272,7 +260,7 @@ La trayectoria de demostración corresponde a la secuencia:
 ### Representación de la trayectoria
 
 <p align="center">
-  <img src="./Diagramas/Trayectoria.png" alt="Trayectoria de referencia del Robot 1" width="750">
+  <img src="./Documentacion/Trayectoria.png" alt="Trayectoria de referencia del Robot 1" width="750">
 </p>
 
 ### Fases de movimiento
