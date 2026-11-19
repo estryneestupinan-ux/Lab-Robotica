@@ -10,7 +10,7 @@
 
 ---
 
-## escripción del proyecto
+## Descripción del proyecto
 
 El Robot 1 es un manipulador diseñado para tomar un recipiente con aceite, trasladarlo, inclinarlo para verter su contenido y regresar a una posición segura.
 
