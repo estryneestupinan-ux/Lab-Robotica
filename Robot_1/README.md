@@ -22,18 +22,18 @@ El proyecto integra diseño mecánico, modelado cinemático, generación de tray
 
 ## Contenido
 
-1. [Estado del proyecto](#-estado-del-proyecto)
-2. [Función dentro de la planta](#-función-dentro-de-la-planta)
-3. [Especificaciones técnicas](#-especificaciones-técnicas)
-4. [Estructura del repositorio](#-estructura-del-repositorio)
-5. [Flujo de trabajo](#-flujo-de-trabajo)
-6. [Modelo cinemático](#-modelo-cinemático)
-7. [Trayectoria de referencia](#-trayectoria-de-referencia)
-8. [Electrónica y control](#-electrónica-y-control)
-9. [Ejecución del proyecto](#-ejecución-del-proyecto)
-10. [Seguridad](#-seguridad)
-11. [Documentación](#-documentación)
-12. [Equipo de trabajo](#-equipo-de-trabajo)
+1. [Estado del proyecto](#estado-del-proyecto)
+2. [Función dentro de la planta](#función-dentro-de-la-planta)
+3. [Especificaciones técnicas](#especificaciones-técnicas)
+4. [Estructura del repositorio](#estructura-del-repositorio)
+5. [Flujo de trabajo](#flujo-de-trabajo)
+6. [Modelo cinemático](#modelo-cinemático)
+7. [Trayectoria de referencia](#trayectoria-de-referencia)
+8. [Electrónica y control](#electrónica-y-control)
+9. [Ejecución del proyecto](#ejecución-del-proyecto)
+10. [Seguridad](#seguridad)
+11. [Documentación](#documentación)
+12. [Equipo de trabajo](#equipo-de-trabajo)
 
 ---
 
@@ -117,17 +117,15 @@ La línea de producción ocupa un área de **1,25 m × 1,25 m** y está compuest
 
 ## Estructura del repositorio
 
-* [Robot_1/](Robot_1/)
-  * [Imagenes/](Robot_1/Imagenes/)
-  * [Documentacion/](Robot_1/Documentacion/)
-  * [Piezas_Robot/](Robot_1/Piezas_Robot/)
-  * [Calculos_Matlab/](Robot_1/Calculos_Matlab/)
-  * [Trayectorias/](Robot_1/Trayectorias/)
-  * [ROS_2/](Robot_1/ROS_2/)
-  * [ESP32/](Robot_1/ESP32/)
-  * [GUI/](Robot_1/GUI/)
-  * [Ejecucion_Comandos/](Robot_1/Ejecucion_Comandos/)
-  * [ANALISIS_CONTEXTO.pdf](Robot_1/ANALISIS_CONTEXTO.pdf)
+  - [Documentacion/](./Documentacion/)
+  - [Piezas_Robot/](./Piezas_Robot/)
+  - [Calculos_Matlab/](./Calculos_Matlab/)
+  - [Trayectorias/](./Trayectorias/)
+  - [ROS_2/](./ROS_2/)
+  - [ESP32/](./ESP32/)
+  - [GUI/](./GUI/)
+  - [Ejecucion_Comandos/](./Ejecucion_Comandos/)
+  - [ANALISIS_CONTEXTO.pdf](./ANALISIS_CONTEXTO.pdf)
 
 ### Descripción de las carpetas
 
