@@ -54,7 +54,7 @@ El robot ha tenido dos versiones. La primera permitió validar la metodología d
 ### Ensamblaje completo
 
 <p align="center">
-  <img src="./Diagramas/Ensamblaje.jpeg" alt="Ensamblaje completo del Robot 1" width="750">
+  <img src="./Documentacion/Ensamblaje.jpeg" alt="Ensamblaje completo del Robot 1" width="750">
 </p>
 
 <p align="center">
@@ -122,7 +122,7 @@ Robot_1/
 │
 ├── Imagenes/
 │
-├── Diagramas/
+├── Documentacion/
 │
 ├── Piezas_Robot/
 │
@@ -130,15 +130,13 @@ Robot_1/
 │
 ├── Trayectorias/
 │
-├── robot2_ws/
+├── ROS_2/
 │
 ├── ESP32/
 │
 ├── GUI/
 │
 ├── Ejecucion_Comandos/
-│
-├── Documentacion/
 │
 └── ANALISIS_CONTEXTO.pdf
 ```
@@ -147,16 +145,15 @@ Robot_1/
 
 | Carpeta | Contenido |
 |:---|:---|
-| `Imagenes/` | Fotografías del robot físico, modelos CAD y capturas de simulación. |
-| `Diagramas/` | Diagramas de planta, proceso e informes técnicos. |
+| `Documentacion/` | Documentación adicional del proyecto, Diagramas de planta, proceso e informes técnicos. |
 | `Piezas_Robot/` | Modelos CAD, piezas STEP y archivos del robot. |
 | `Calculos_Matlab/` | Cinemática directa, inversa y generación de trayectorias. |
 | `Trayectorias/` | Archivos CSV de trayectorias articulares y cartesianas. |
-| `robot2_ws/` | Espacio de trabajo ROS 2, URDF, controladores y scripts. |
+| `ROS_2/` | Espacio de trabajo ROS 2, URDF, controladores y scripts. |
 | `ESP32/` | Firmware y configuración del microcontrolador. |
 | `GUI/` | Interfaz gráfica de monitoreo. |
 | `Ejecucion_Comandos/` | Guías de ejecución y comandos. |
-| `Documentacion/` | Documentación adicional del proyecto. |
+
 
 ---
 
