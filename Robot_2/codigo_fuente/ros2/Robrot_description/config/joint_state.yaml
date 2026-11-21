@@ -1,0 +1,19 @@
+# Joint configuration for joint_state_publisher_gui
+
+joint_state_publisher:
+  ros__parameters:
+    zeros:
+      Revoluci_n_6: 0.0
+      Revoluci_n_7: 0.0
+      Corredera_9: 0.080
+      Revoluci_n_12: 0.0
+      Corredera_13: 0.0
+      Corredera_14: 0.0
+
+    source_list:
+      - Revoluci_n_6
+      - Revoluci_n_7
+      - Corredera_9
+      - Revoluci_n_12
+      - Corredera_13
+      - Corredera_14

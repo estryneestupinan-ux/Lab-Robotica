@@ -1,0 +1,11 @@
+link,parent_joint,joint_type,rule,original_roll_deg,original_pitch_deg,original_yaw_deg,post_roll_deg,post_pitch_deg,post_yaw_deg,role
+Brazo1_Unido,Revoluci_n_6,revolute,auto,0.000000,41.881696,0.000000,-90.000000,0.000000,0.000000,revolute_axis_z
+Brazo_2,Revoluci_n_7,revolute,auto,0.000000,4.586943,180.000000,-90.000000,0.000000,0.000000,revolute_axis_z
+Cremallera2,Corredera_9,prismatic,keep,4.586943,0.000000,-90.000000,4.586943,0.000000,-90.000000,unchanged
+Robrot_grip,Corredera_13,prismatic,keep,-90.000000,85.413057,0.000000,-90.000000,85.413057,0.000000,unchanged
+Robrot_grip_2,Corredera_14,prismatic,keep,-90.000000,-85.413057,-180.000000,-90.000000,-85.413057,-180.000000,unchanged
+Robrot_guarda,Revoluci_n_17,continuous,auto,-10.489153,63.941656,80.556842,180.000000,85.413057,0.000000,revolute_axis_z
+Robrot_guarda_2,Revoluci_n_15,continuous,auto,-10.489153,63.941656,80.556842,180.000000,85.413057,0.000000,revolute_axis_z
+base_link,,root,auto,180.000000,0.000000,180.000000,0.000000,0.000000,0.000000,root_x_forward_z_up
+carril,R_gida_11,fixed,keep,-175.413057,0.000000,-90.000000,-175.413057,0.000000,-90.000000,unchanged
+union,Revoluci_n_12,revolute,auto,-175.413057,-0.001229,-90.000099,180.000000,85.413057,0.000000,revolute_axis_z

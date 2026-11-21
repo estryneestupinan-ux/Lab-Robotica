@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visor SCARA</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --text: #1d2330; --muted: #667085; --line: #d9dee7;
+    --acc: #2563eb; --ok: #15803d; --bad: #b42318; --warn: #b54708;
+    --arm1: #3b82f6; --arm2: #ea8a2f; --ghost: #94a3b8; --work: #e8eefc; --grid: #edf0f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #11151c; --panel: #1a2029; --text: #e6e9ef; --muted: #98a2b3; --line: #2c3442;
+            --acc: #60a5fa; --ok: #4ade80; --bad: #f87171; --warn: #fbbf24;
+            --arm1: #60a5fa; --arm2: #f5a35a; --ghost: #64748b; --work: #1d2a44; --grid: #202835; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, Segoe UI, Arial, sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
+  header h1 { font-size: 17px; margin: 0 12px 0 0; }
+  .estado { padding: 3px 10px; border-radius: 99px; background: var(--grid); font-weight: 600; }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 14px; padding: 14px 16px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .card h2 { font-size: 14px; margin: 0 0 8px; }
+  canvas { width: 100%; display: block; border-radius: 8px; cursor: crosshair; touch-action: none; }
+  button { font: inherit; padding: 6px 12px; border-radius: 7px; border: 1px solid var(--line); background: var(--panel); color: var(--text); cursor: pointer; }
+  button:hover { border-color: var(--acc); }
+  button.prim { background: var(--acc); border-color: var(--acc); color: #fff; }
+  button.stop { background: var(--bad); border-color: var(--bad); color: #fff; font-weight: 700; }
+  input { font: inherit; width: 72px; padding: 5px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--text); }
+  .fila { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+  .lado { display: flex; flex-direction: column; gap: 14px; }
+  .val { font-variant-numeric: tabular-nums; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 13px; }
+  th, td { border-bottom: 1px solid var(--line); padding: 4px 5px; text-align: right; }
+  th { color: var(--muted); font-weight: 600; }
+  td input { width: 58px; }
+  #consola { height: 170px; overflow: auto; font: 12px/1.35 Consolas, monospace; white-space: pre-wrap; background: var(--bg); border-radius: 6px; padding: 6px; }
+  .muted { color: var(--muted); }
+  .grid2 { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; }
+  #zbar { height: 10px; background: var(--grid); border-radius: 5px; position: relative; margin: 6px 0 2px; }
+  #zbar .act, #zbar .obj { position: absolute; top: -3px; width: 4px; height: 16px; border-radius: 2px; }
+  #zbar .act { background: var(--arm2); } #zbar .obj { background: var(--ghost); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Visor SCARA</h1>
+  <button id="bConectar" class="prim">Conectar ESP32</button>
+  <span class="estado" id="estado">simulación (sin conectar)</span>
+  <button id="bHome">Home</button>
+  <button id="bPos">Pos</button>
+  <button id="bReset">Reset</button>
+  <button id="bStop" class="stop">PARAR</button>
+  <span class="muted" id="nota"></span>
+</header>
+<main>
+  <section class="card">
+    <h2>Vista superior <span class="muted">(clic = mover la punta ahí · cuadrícula 50 mm · origen = eje del hombro)</span></h2>
+    <canvas id="cv" width="900" height="640"></canvas>
+    <div class="muted" style="margin-top:6px">Gris = objetivo · color = posición real según encoders · zona azul = alcanzable dentro de los límites</div>
+  </section>
+  <section class="lado">
+    <div class="card">
+      <h2>Ir a un punto (mm)</h2>
+      <div class="fila">x <input id="ix" value="200"> y <input id="iy" value="100"> z <input id="iz" value="100">
+        <button id="bIr" class="prim">Ir</button></div>
+      <div class="fila">hombro <input id="ia1" value="30"> codo <input id="ia2" value="-45">
+        <button id="bQ">Mover ángulos</button></div>
+      <div class="fila">cuadrado: esquina <input id="cx" value="150"> <input id="cy" value="80"> lado <input id="cl" value="80">
+        <button id="bCuad">Cuadrado</button></div>
+      <div class="fila">pinza <input id="ip" value="90"> <button id="bPinza">Pinza</button></div>
+    </div>
+    <div class="card">
+      <h2>Estado</h2>
+      <div class="grid2 val">
+        <span class="muted">hombro</span><span id="vq1">–</span>
+        <span class="muted">codo</span><span id="vq2">–</span>
+        <span class="muted">z</span><span id="vz">–</span>
+        <span class="muted">punta (encoders)</span><span id="vxy">–</span>
+        <span class="muted">objetivo</span><span id="vobj">–</span>
+        <span class="muted">home / FC</span><span id="vh">–</span>
+      </div>
+      <div id="zbar"><div class="obj"></div><div class="act"></div></div>
+      <div class="muted" id="zlim"></div>
+    </div>
+    <div class="card">
+      <h2>Consola</h2>
+      <div id="consola"></div>
+      <div class="fila" style="margin-top:6px"><input id="icmd" style="flex:1;width:auto" placeholder="comando (ej. jog 1 10)"><button id="bEnviar">Enviar</button></div>
+    </div>
+  </section>
+  <section class="card" style="grid-column: 1 / -1">
+    <h2>Verificación: objetivo vs real</h2>
+    <div class="fila"><button id="bReg" class="prim">Registrar punto actual</button>
+      <button id="bCsv">Descargar CSV</button><button id="bBorrar">Borrar tabla</button>
+      <span class="muted">Mide con regla dónde quedó la punta y escribe x, y medidos: el error se calcula solo.</span></div>
+    <table><thead><tr><th>#</th><th>x obj</th><th>y obj</th><th>z obj</th><th>x enc</th><th>y enc</th><th>error enc</th>
+      <th>x medido</th><th>y medido</th><th>error real</th></tr></thead><tbody id="tabla"></tbody></table>
+  </section>
+</main>
+<script>
+// ---------------- modelo (se actualiza con la linea '#' del ESP32) ----------------
+const M = { L1: 120, L2: 188.358, lim: [[0, 180], [-120, 120], [85, 110]] };
+const S = { estado: 'simulación', q: [0, 0, 110], t: [0, 0, 110], homed: '000', fc: '000', x: 0, y: 0, conectado: false };
+let rastro = [];
+
+const $ = id => document.getElementById(id);
+const rad = d => d * Math.PI / 180, deg = r => r * 180 / Math.PI;
+function fk(a1, a2) { return [M.L1 * Math.cos(rad(a1)) + M.L2 * Math.cos(rad(a1 + a2)), M.L1 * Math.sin(rad(a1)) + M.L2 * Math.sin(rad(a1 + a2))]; }
+const dentro = (i, v) => v >= M.lim[i][0] - 0.01 && v <= M.lim[i][1] + 0.01;
+function ik(x, y) {
+  const c2 = (x * x + y * y - M.L1 ** 2 - M.L2 ** 2) / (2 * M.L1 * M.L2);
+  if (Math.abs(c2) > 1) return null;
+  let mejor = null;
+  for (const s of [1, -1]) {
+    const b = s * Math.acos(c2);
+    let a = deg(Math.atan2(y, x) - Math.atan2(M.L2 * Math.sin(b), M.L1 + M.L2 * Math.cos(b)));
+    a = ((a + 540) % 360) - 180;
+    for (const k of [-360, 0, 360]) {
+      const A = a + k, B = deg(b);
+      if (dentro(0, A) && dentro(1, B)) {
+        const costo = Math.abs(A - S.q[0]) + Math.abs(B - S.q[1]);
+        if (!mejor || costo < mejor[2]) mejor = [A, B, costo];
+      }
+    }
+  }
+  return mejor;
+}
+
+// ---------------- puerto serie ----------------
+let puerto = null, escritor = null;
+const enc = new TextEncoder();
+function log(t, cls) {
+  const c = $('consola'); const d = document.createElement('div'); d.textContent = t; if (cls) d.style.color = cls;
+  c.appendChild(d); while (c.childNodes.length > 400) c.removeChild(c.firstChild); c.scrollTop = c.scrollHeight;
+}
+async function enviar(cmd) {
+  log('> ' + cmd, 'var(--acc)');
+  if (S.conectado && escritor) { await escritor.write(enc.encode(cmd + '\n')); return; }
+  simular(cmd);
+}
+async function conectar() {
+  if (!('serial' in navigator)) { alert('Este navegador no tiene Web Serial. Abre el archivo con Microsoft Edge o Google Chrome.'); return; }
+  try {
+    puerto = await navigator.serial.requestPort();
+    await puerto.open({ baudRate: 115200 });
+  } catch (e) { log('No se pudo abrir el puerto: ' + e.message, 'var(--bad)'); return; }
+  escritor = puerto.writable.getWriter();
+  S.conectado = true; $('bConectar').textContent = 'Conectado'; $('bConectar').disabled = true;
+  log('Conectado. Pidiendo datos al ESP32...', 'var(--ok)');
+  setTimeout(() => { enviar('rep 1'); enviar('info'); }, 1500);
+  leer();
+}
+async function leer() {
+  const dec = new TextDecoderStream();
+  puerto.readable.pipeTo(dec.writable).catch(() => {});
+  const r = dec.readable.getReader();
+  let buf = '';
+  try {
+    while (true) {
+      const { value, done } = await r.read();
+      if (done) break;
+      buf += value;
+      let k;
+      while ((k = buf.indexOf('\n')) >= 0) { linea(buf.slice(0, k).replace('\r', '')); buf = buf.slice(k + 1); }
+    }
+  } catch (e) { log('Conexión perdida: ' + e.message, 'var(--bad)'); }
+  S.conectado = false; $('bConectar').disabled = false; $('bConectar').textContent = 'Conectar ESP32';
+}
+function linea(l) {
+  if (l.startsWith('@,')) {
+    const p = l.split(',');
+    S.estado = p[1]; S.q = [+p[2], +p[3], +p[4]]; S.t = [+p[5], +p[6], +p[7]]; S.x = +p[8]; S.y = +p[9];
+    S.homed = p[10]; S.fc = p[11];
+    return;
+  }
+  if (l.startsWith('#,')) {
+    const p = l.split(',').map(Number);
+    M.L1 = p[1]; M.L2 = p[2]; M.lim = [[p[3], p[4]], [p[5], p[6]], [p[7], p[8]]];
+    log(`Modelo: L1=${M.L1} L2=${M.L2} límites hombro [${M.lim[0]}] codo [${M.lim[1]}] z [${M.lim[2]}]`, 'var(--muted)');
+    zonaCache = null; return;
+  }
+  if (l.trim()) log(l, /FALLA|!!!/.test(l) ? 'var(--bad)' : undefined);
+}
+
+// ---------------- simulacion (sin ESP32) ----------------
+let simCola = null;
+function simular(cmd) {
+  const p = cmd.trim().toLowerCase().split(/[\s,]+/);
+  if (p[0] === 'xyz') {
+    const s = ik(+p[1], +p[2]);
+    if (!s || !dentro(2, +p[3])) { log('  [sim] fuera de alcance o de límites', 'var(--warn)'); return; }
+    S.t = [s[0], s[1], +p[3]]; S.estado = 'moviendo';
+  } else if (p[0] === 'q') {
+    if (!dentro(0, +p[1]) || !dentro(1, +p[2]) || !dentro(2, +p[3])) { log('  [sim] fuera de límites', 'var(--warn)'); return; }
+    S.t = [+p[1], +p[2], +p[3]]; S.estado = 'moviendo';
+  } else if (p[0] === 'home') { S.t = [M.lim[0][0] + 3, M.lim[1][0] + 3, M.lim[2][1] - 1]; S.homed = '111'; S.estado = 'moviendo'; }
+  else if (p[0] === 's') { S.t = [...S.q]; S.estado = 'quieto'; }
+  else if (p[0] === 'cuadrado') {
+    const x = +p[1], y = +p[2], L = +p[3];
+    simCola = [[x, y], [x + L, y], [x + L, y + L], [x, y + L], [x, y]];
+    simular(`xyz ${x} ${y} ${S.q[2]}`);
+  } else log('  [sim] (este comando solo funciona con el ESP32 conectado)', 'var(--muted)');
+}
+function pasoSim(dt) {
+  if (S.conectado) return;
+  let quieto = true;
+  const vel = [60, 60, 15];
+  for (let i = 0; i < 3; i++) {
+    const e = S.t[i] - S.q[i], m = vel[i] * dt;
+    if (Math.abs(e) > 0.01) { quieto = false; S.q[i] += Math.max(-m, Math.min(m, e)); }
+  }
+  [S.x, S.y] = fk(S.q[0], S.q[1]);
+  if (quieto && S.estado === 'moviendo') {
+    S.estado = 'quieto';
+    if (simCola && simCola.length) { simCola.shift(); if (simCola.length) setTimeout(() => simular(`xyz ${simCola[0][0]} ${simCola[0][1]} ${S.q[2]}`), 600); else simCola = null; }
+  }
+}
+
+// ---------------- dibujo ----------------
+const cv = $('cv'), g = cv.getContext('2d');
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let esc = 1.5, ox = 0, oy = 0, zonaCache = null;
+function ajustar() {
+  const w = cv.clientWidth, h = Math.round(w * 0.7);
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = w * dpr; cv.height = h * dpr; cv.style.height = h + 'px';
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const R = M.L1 + M.L2 + 25;
+  esc = Math.min(w / (2 * R), h / (2 * R)); ox = w / 2; oy = h / 2; zonaCache = null;
+}
+const P = (x, y) => [ox + x * esc, oy - y * esc];
+function zona() {
+  if (zonaCache) return zonaCache;
+  const pts = [];
+  for (let a = M.lim[0][0]; a <= M.lim[0][1]; a += 3) for (let b = M.lim[1][0]; b <= M.lim[1][1]; b += 3) pts.push(fk(a, b));
+  return (zonaCache = pts);
+}
+function brazo(q1, q2, c1, c2, ancho, alfa) {
+  const e = [M.L1 * Math.cos(rad(q1)), M.L1 * Math.sin(rad(q1))], t = fk(q1, q2);
+  g.globalAlpha = alfa; g.lineCap = 'round';
+  g.strokeStyle = c1; g.lineWidth = ancho; g.beginPath(); g.moveTo(...P(0, 0)); g.lineTo(...P(...e)); g.stroke();
+  g.strokeStyle = c2; g.lineWidth = ancho * 0.8; g.beginPath(); g.moveTo(...P(...e)); g.lineTo(...P(...t)); g.stroke();
+  g.fillStyle = css('--text'); g.beginPath(); g.arc(...P(...e), 3, 0, 7); g.fill();
+  g.globalAlpha = 1; return t;
+}
+function dibujar() {
+  const w = cv.clientWidth, h = cv.clientHeight;
+  g.clearRect(0, 0, w, h);
+  g.strokeStyle = css('--grid'); g.lineWidth = 1;
+  for (let v = -400; v <= 400; v += 50) {
+    g.beginPath(); g.moveTo(...P(v, -400)); g.lineTo(...P(v, 400)); g.stroke();
+    g.beginPath(); g.moveTo(...P(-400, v)); g.lineTo(...P(400, v)); g.stroke();
+  }
+  g.fillStyle = css('--work');
+  for (const [x, y] of zona()) { const [a, b] = P(x, y); g.fillRect(a - 2.5, b - 2.5, 5, 5); }
+  g.strokeStyle = css('--muted'); g.lineWidth = 1;
+  g.beginPath(); g.moveTo(...P(-30, 0)); g.lineTo(...P(330, 0)); g.stroke();
+  g.beginPath(); g.moveTo(...P(0, -330)); g.lineTo(...P(0, 330)); g.stroke();
+  g.fillStyle = css('--muted'); g.font = '12px system-ui';
+  g.fillText('x', ...P(320, 6)); g.fillText('y', ...P(5, 320));
+  // rastro
+  g.strokeStyle = css('--arm2'); g.globalAlpha = 0.35; g.lineWidth = 1.5; g.beginPath();
+  rastro.forEach((p, i) => i ? g.lineTo(...P(...p)) : g.moveTo(...P(...p))); g.stroke(); g.globalAlpha = 1;
+  // objetivo y real
+  const tg = brazo(S.t[0], S.t[1], css('--ghost'), css('--ghost'), 12, 0.45);
+  const tr = brazo(S.q[0], S.q[1], css('--arm1'), css('--arm2'), 12, 0.95);
+  g.strokeStyle = css('--bad'); g.lineWidth = 2; g.beginPath(); g.arc(...P(...tg), 6, 0, 7); g.stroke();
+  g.fillStyle = css('--text'); g.beginPath(); g.arc(...P(0, 0), 5, 0, 7); g.fill();
+  g.beginPath(); g.arc(...P(...tr), 4, 0, 7); g.fill();
+  // panel
+  $('estado').textContent = S.conectado ? S.estado : 'simulación (sin conectar)';
+  $('estado').style.color = S.estado === 'FALLA' ? css('--bad') : S.estado === 'moviendo' || S.estado === 'homing' ? css('--warn') : css('--ok');
+  $('vq1').textContent = `${S.q[0].toFixed(2)}°  (obj ${S.t[0].toFixed(2)}°)`;
+  $('vq2').textContent = `${S.q[1].toFixed(2)}°  (obj ${S.t[1].toFixed(2)}°)`;
+  $('vz').textContent = `${S.q[2].toFixed(1)} mm  (obj ${S.t[2].toFixed(1)} mm)`;
+  $('vxy').textContent = `x ${tr[0].toFixed(1)}  y ${tr[1].toFixed(1)} mm`;
+  $('vobj').textContent = `x ${tg[0].toFixed(1)}  y ${tg[1].toFixed(1)} mm  · error ${Math.hypot(tg[0] - tr[0], tg[1] - tr[1]).toFixed(1)} mm`;
+  $('vh').textContent = `home ${S.homed} · FC ${S.fc}`;
+  const [z0, z1] = M.lim[2], f = v => `${Math.max(0, Math.min(100, (v - z0) / (z1 - z0 || 1) * 100))}%`;
+  document.querySelector('#zbar .act').style.left = f(S.q[2]); document.querySelector('#zbar .obj').style.left = f(S.t[2]);
+  $('zlim').textContent = `z: ${z0} … ${z1} mm`;
+}
+let tPrev = performance.now(), tRastro = 0;
+function bucle(t) {
+  const dt = Math.min(0.1, (t - tPrev) / 1000); tPrev = t;
+  pasoSim(dt);
+  if (t - tRastro > 100) {
+    tRastro = t; const p = fk(S.q[0], S.q[1]); const u = rastro[rastro.length - 1];
+    if (!u || Math.hypot(p[0] - u[0], p[1] - u[1]) > 0.5) { rastro.push(p); if (rastro.length > 1500) rastro.shift(); }
+  }
+  dibujar();
+}
+
+// ---------------- verificacion ----------------
+let filas = [];
+function registrar() {
+  const tg = fk(S.t[0], S.t[1]), tr = fk(S.q[0], S.q[1]);
+  filas.push({ xo: tg[0], yo: tg[1], zo: S.t[2], xe: tr[0], ye: tr[1], xm: '', ym: '' }); pintarTabla();
+}
+function pintarTabla() {
+  $('tabla').innerHTML = '';
+  filas.forEach((f, i) => {
+    const tr = document.createElement('tr');
+    const em = f.xm !== '' && f.ym !== '' ? Math.hypot(f.xm - f.xo, f.ym - f.yo).toFixed(1) : '–';
+    tr.innerHTML = `<td>${i + 1}</td><td>${f.xo.toFixed(1)}</td><td>${f.yo.toFixed(1)}</td><td>${f.zo.toFixed(1)}</td>
+      <td>${f.xe.toFixed(1)}</td><td>${f.ye.toFixed(1)}</td><td>${Math.hypot(f.xe - f.xo, f.ye - f.yo).toFixed(1)}</td>
+      <td><input data-i="${i}" data-k="xm" value="${f.xm}"></td><td><input data-i="${i}" data-k="ym" value="${f.ym}"></td><td><b>${em}</b></td>`;
+    $('tabla').appendChild(tr);
+  });
+  $('tabla').querySelectorAll('input').forEach(inp => inp.onchange = () => {
+    filas[inp.dataset.i][inp.dataset.k] = inp.value === '' ? '' : +inp.value; pintarTabla();
+  });
+}
+function csv() {
+  const t = 'n,x_obj,y_obj,z_obj,x_enc,y_enc,err_enc,x_medido,y_medido,err_real\n' + filas.map((f, i) =>
+    [i + 1, f.xo.toFixed(2), f.yo.toFixed(2), f.zo.toFixed(2), f.xe.toFixed(2), f.ye.toFixed(2),
+     Math.hypot(f.xe - f.xo, f.ye - f.yo).toFixed(2), f.xm, f.ym,
+     f.xm !== '' && f.ym !== '' ? Math.hypot(f.xm - f.xo, f.ym - f.yo).toFixed(2) : ''].join(',')).join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([t], { type: 'text/csv' }));
+  a.download = 'verificacion_scara.csv'; a.click();
+}
+
+// ---------------- eventos ----------------
+$('bConectar').onclick = conectar;
+$('bHome').onclick = () => enviar('home');
+$('bPos').onclick = () => enviar('pos');
+$('bReset').onclick = () => enviar('reset');
+$('bStop').onclick = () => enviar('s');
+$('bIr').onclick = () => enviar(`xyz ${$('ix').value} ${$('iy').value} ${$('iz').value}`);
+$('bQ').onclick = () => enviar(`q ${$('ia1').value} ${$('ia2').value} ${$('iz').value}`);
+$('bCuad').onclick = () => enviar(`cuadrado ${$('cx').value} ${$('cy').value} ${$('cl').value}`);
+$('bPinza').onclick = () => enviar(`pinza ${$('ip').value}`);
+$('bEnviar').onclick = () => { if ($('icmd').value.trim()) { enviar($('icmd').value.trim()); $('icmd').value = ''; } };
+$('icmd').onkeydown = e => { if (e.key === 'Enter') $('bEnviar').click(); };
+$('bReg').onclick = registrar; $('bCsv').onclick = csv; $('bBorrar').onclick = () => { filas = []; pintarTabla(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') enviar('s'); });
+cv.addEventListener('click', e => {
+  const r = cv.getBoundingClientRect();
+  const x = ((e.clientX - r.left) - ox) / esc, y = (oy - (e.clientY - r.top)) / esc;
+  $('ix').value = x.toFixed(0); $('iy').value = y.toFixed(0);
+  enviar(`xyz ${x.toFixed(1)} ${y.toFixed(1)} ${$('iz').value}`);
+});
+window.addEventListener('resize', ajustar);
+if (!('serial' in navigator)) $('nota').textContent = 'Para conectar el robot abre este archivo con Edge o Chrome.';
+ajustar(); setInterval(() => bucle(performance.now()), 33);
+log('Modo simulación: haz clic en la zona azul para ver cómo se movería. Conecta el ESP32 para mover el robot real.', 'var(--muted)');
+log('Tecla Esc = PARAR.', 'var(--muted)');
+</script>
+</body>
+</html>

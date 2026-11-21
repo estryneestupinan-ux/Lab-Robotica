@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Robrot">
+
+  <!-- sim:=true  -> Gazebo (gz_ros2_control)   |   sim:=false -> RViz con hardware simulado (mock) -->
+  <xacro:arg name="sim" default="false"/>
+  <xacro:arg name="prefix" default=""/>
+
+  <!-- Materials (shared across all assemblies) -->
+  <material name="Acero">
+    <color rgba="0.627 0.627 0.627 1.0"/>
+  </material>
+
+  <!-- Assembly includes -->
+  <xacro:include filename="$(find Robrot_description)/urdf/assemblies/base_link.urdf.xacro"/>
+  <xacro:include filename="$(find Robrot_description)/urdf/assemblies/Brazo1_Unido.urdf.xacro"/>
+  <xacro:include filename="$(find Robrot_description)/urdf/assemblies/Robrot.urdf.xacro"/>
+
+  <!-- Instantiate assemblies -->
+  <xacro:base_link prefix=""/>
+  <xacro:Brazo1_Unido prefix=""/>
+  <xacro:Robrot prefix=""/>
+
+  <!-- Mount joints (cross-assembly connections) -->
+  <!-- These define how assemblies connect to each other. -->
+  <!-- When swapping a dummy assembly with a real part, -->
+  <!-- update the include + macro call above, and adjust -->
+  <!-- parent/child link names in the mount joint below. -->
+
+  <!-- Corrección de orientación: el CAD viene con Y hacia arriba (Fusion).
+       Este link "world" gira TODO el robot +90° en X para que Y pase a ser Z (arriba). -->
+  <link name="world"/>
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+  </joint>
+
+  <joint name="Revoluci_n_6" type="revolute">
+    <parent link="base_link"/>
+    <child link="Brazo1_Unido"/>
+    <origin xyz="0.000000 0.159100 0.000000" rpy="-1.570796 0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <!-- limites reales: +46.1 grados = final de carrera del hombro (izquierda), -79.9 = tope derecho -->
+    <limit lower="-1.394000" upper="0.804000" effort="100.0" velocity="0.20"/>
+  </joint>
+
+  <joint name="Revoluci_n_7" type="revolute">
+    <parent link="Brazo1_Unido"/>
+    <child link="Brazo_2"/>
+    <origin xyz="-0.089300 -0.080100 0.000000" rpy="0.000000 0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <!-- limites reales: +134.5 grados = final de carrera del codo (izquierda); -45.5 = 180 grados mas alla (provisional) -->
+    <limit lower="-0.794000" upper="2.347000" effort="100.0" velocity="0.20"/>
+  </joint>
+
+  <!-- ===================== ros2_control (un solo sistema para todo el robot) ===================== -->
+  <!-- 6 joints: brazo (Revoluci_n_6, Revoluci_n_7, Corredera_9) + pinza (servo Revoluci_n_12 y dedos Corredera_13/14) -->
+  <ros2_control name="Robrot_system" type="system">
+    <hardware>
+      <xacro:if value="$(arg sim)">
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </xacro:if>
+      <xacro:unless value="$(arg sim)">
+        <plugin>mock_components/GenericSystem</plugin>
+      </xacro:unless>
+    </hardware>
+    <joint name="Revoluci_n_6">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Revoluci_n_7">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Corredera_9">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.080</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Revoluci_n_12">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Corredera_13">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Corredera_14">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </ros2_control>
+
+  <!-- ===================== Plugin de Gazebo (solo con sim:=true) ===================== -->
+  <xacro:if value="$(arg sim)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find Robrot_description)/config/gz_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+
+</robot>
