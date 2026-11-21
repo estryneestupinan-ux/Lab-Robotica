@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Brazo1_Unido_macro">
+
+  <xacro:macro name="Brazo1_Unido" params="prefix">
+
+    <!-- Links -->
+    <link name="${prefix}Brazo1_Unido">
+      <inertial>
+        <origin xyz="-0.043622 -0.039114 -0.034607" rpy="0 0 0"/>
+        <mass value="2.006378"/>
+        <inertia ixx="4.751628e-03" ixy="-2.249996e-03" ixz="7.159921e-05"
+                 iyy="5.243393e-03" iyz="6.420102e-05" izz="6.440291e-03"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.089343 -0.080111 -0.080300" rpy="1.570796 0.000000 0.730973"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Brazo1_Unido/Brazo1_Unido.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="-0.089343 -0.080111 -0.080300" rpy="1.570796 0.000000 0.730973"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Brazo1_Unido/Brazo1_Unido_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+  </xacro:macro>
+
+</robot>

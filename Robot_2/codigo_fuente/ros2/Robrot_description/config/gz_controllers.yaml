@@ -1,0 +1,32 @@
+# Controladores para Gazebo (gz_ros2_control)
+# Comandos de velocidad en: /velocity_controller/commands
+# ORDEN de joints (control_cinematico.py y puente_robot_real.py usan este mismo orden):
+#   [Revoluci_n_6 (q1), Revoluci_n_7 (q2), Corredera_9 (d3: 0 = arriba, 0.085 m = abajo/home),
+#    Revoluci_n_12 (servo de la pinza, 0 = cerrada, pi/2 = abierta),
+#    Corredera_13, Corredera_14 (dedos, 0 = cerrada, 0.018 m = abierta)]
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+    use_sim_time: true
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    velocity_controller:
+      type: forward_command_controller/ForwardCommandController
+
+joint_state_broadcaster:
+  ros__parameters:
+    use_sim_time: true
+
+velocity_controller:
+  ros__parameters:
+    use_sim_time: true
+    joints:
+      - Revoluci_n_6
+      - Revoluci_n_7
+      - Corredera_9
+      - Revoluci_n_12
+      - Corredera_13
+      - Corredera_14
+    interface_name: velocity

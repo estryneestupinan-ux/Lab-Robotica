@@ -1,0 +1,38 @@
+# Controladores ros2_control para RViz con hardware simulado (display.launch.py)
+# Estados en: /joint_states
+# Comandos en: /position_controller/commands  y  /velocity_controller/commands
+# Orden de joints (el mismo que en gz_controllers.yaml):
+#   Revoluci_n_6, Revoluci_n_7, Corredera_9, Revoluci_n_12, Corredera_13, Corredera_14
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    position_controller:
+      type: forward_command_controller/ForwardCommandController
+    velocity_controller:
+      type: forward_command_controller/ForwardCommandController
+
+position_controller:
+  ros__parameters:
+    joints:
+      - Revoluci_n_6
+      - Revoluci_n_7
+      - Corredera_9
+      - Revoluci_n_12
+      - Corredera_13
+      - Corredera_14
+    interface_name: position
+
+velocity_controller:
+  ros__parameters:
+    joints:
+      - Revoluci_n_6
+      - Revoluci_n_7
+      - Corredera_9
+      - Revoluci_n_12
+      - Corredera_13
+      - Corredera_14
+    interface_name: velocity

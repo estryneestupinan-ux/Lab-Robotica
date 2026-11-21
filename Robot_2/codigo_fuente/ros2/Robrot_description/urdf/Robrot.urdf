@@ -1,0 +1,408 @@
+<?xml version="1.0"?>
+<robot name="Robrot">
+
+  <!-- sim:=true  -> Gazebo (gz_ros2_control)   |   sim:=false -> RViz con hardware simulado (mock) -->
+  
+  
+
+  <!-- Materials (shared across all assemblies) -->
+  <material name="Acero">
+    <color rgba="0.627 0.627 0.627 1.0"/>
+  </material>
+
+  <!-- Assembly includes -->
+
+  <!-- Instantiate assemblies -->
+  
+
+    <!-- Links -->
+    <link name="base_link">
+      <inertial>
+        <origin xyz="0.052678 0.037753 -0.000515" rpy="0 0 0"/>
+        <mass value="3.116656"/>
+        <inertia ixx="7.260591e-03" ixy="-2.850225e-04" ixz="-3.842745e-06"
+                 iyy="1.452437e-02" iyz="-4.241836e-05" izz="1.401797e-02"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.000000 0.000000 0.000000" rpy="3.141593 0.000000 3.141593"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/base_link/base_link.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="0.000000 0.000000 0.000000" rpy="3.141593 0.000000 3.141593"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/base_link/base_link_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+  
+  
+
+    <!-- Links -->
+    <link name="Brazo1_Unido">
+      <inertial>
+        <origin xyz="-0.043622 -0.039114 -0.034607" rpy="0 0 0"/>
+        <mass value="2.006378"/>
+        <inertia ixx="4.751628e-03" ixy="-2.249996e-03" ixz="7.159921e-05"
+                 iyy="5.243393e-03" iyz="6.420102e-05" izz="6.440291e-03"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.089343 -0.080111 -0.080300" rpy="1.570796 0.000000 0.730973"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Brazo1_Unido/Brazo1_Unido.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="-0.089343 -0.080111 -0.080300" rpy="1.570796 0.000000 0.730973"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Brazo1_Unido/Brazo1_Unido_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+  
+  
+
+    <!-- Links -->
+    <link name="Brazo_2">
+      <inertial>
+        <origin xyz="-0.131810 0.010778 -0.057606" rpy="0 0 0"/>
+        <mass value="1.598018"/>
+        <inertia ixx="1.852850e-03" ixy="3.809434e-04" ixz="9.832691e-04"
+                 iyy="6.270689e-03" iyz="-9.262016e-05" izz="6.416990e-03"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.000043 -0.000011 -0.077300" rpy="-1.570796 0.000000 3.061535"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Brazo_2.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="-0.000043 -0.000011 -0.077300" rpy="-1.570796 0.000000 3.061535"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Brazo_2_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Cremallera2">
+      <inertial>
+        <origin xyz="0.332650 -0.147155 -0.070159" rpy="0 0 0"/>
+        <mass value="0.376862"/>
+        <inertia ixx="3.488333e-05" ixy="8.573198e-07" ixz="2.093134e-06"
+                 iyy="4.512250e-04" iyz="1.211059e-07" izz="4.363203e-04"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.276497 -0.155300 -0.055064" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Cremallera2.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="0.276497 -0.155300 -0.055064" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Cremallera2_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="carril">
+      <inertial>
+        <origin xyz="0.000000 0.003439 0.070000" rpy="0 0 0"/>
+        <mass value="0.164530"/>
+        <inertia ixx="3.010060e-04" ixy="0.000000e+00" ixz="0.000000e+00"
+                 iyy="3.164771e-04" iyz="0.000000e+00" izz="1.784704e-05"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/carril.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/carril_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="union">
+      <inertial>
+        <origin xyz="0.000000 0.000000 -0.034974" rpy="0 0 0"/>
+        <mass value="0.007931"/>
+        <inertia ixx="1.000000e-06" ixy="1.645815e-11" ixz="0.000000e+00"
+                 iyy="1.000000e-06" iyz="0.000000e+00" izz="1.000000e-06"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.000000 0.013000 -0.036600" rpy="1.570796 0.000000 1.570818"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/union.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="0.000000 0.013000 -0.036600" rpy="1.570796 0.000000 1.570818"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/union_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Robrot_grip">
+      <inertial>
+        <origin xyz="0.302010 -0.035467 -0.122953" rpy="0 0 0"/>
+        <mass value="0.055148"/>
+        <inertia ixx="7.634863e-06" ixy="-1.453665e-06" ixz="0.000000e+00"
+                 iyy="7.425783e-06" iyz="0.000000e+00" izz="1.341919e-05"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.296992 -0.046600 -0.122953" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Robrot_grip.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="0.296992 -0.046600 -0.122953" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Robrot_grip_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Robrot_grip_2">
+      <inertial>
+        <origin xyz="0.292603 -0.035467 -0.005709" rpy="0 0 0"/>
+        <mass value="0.055148"/>
+        <inertia ixx="7.634863e-06" ixy="-1.453665e-06" ixz="0.000000e+00"
+                 iyy="7.425783e-06" iyz="0.000000e+00" izz="1.341919e-05"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.287586 -0.046600 -0.005709" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Robrot_grip_2.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="0.287586 -0.046600 -0.005709" rpy="0.000000 0.000000 0.000000"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Robrot_grip_2_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Robrot_guarda_2">
+      <inertial>
+        <origin xyz="0.315908 -0.051277 -0.035100" rpy="0 0 0"/>
+        <mass value="0.008582"/>
+        <inertia ixx="1.000000e-06" ixy="3.631986e-07" ixz="0.000000e+00"
+                 iyy="1.000000e-06" iyz="0.000000e+00" izz="1.070499e-06"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.311402 -0.049110 -0.036600" rpy="1.570796 0.000000 -0.448188"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Robrot_guarda_2.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="0.311402 -0.049110 -0.036600" rpy="1.570796 0.000000 -0.448188"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Robrot_guarda_2_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Robrot_guarda">
+      <inertial>
+        <origin xyz="0.288654 -0.097980 -0.035100" rpy="0 0 0"/>
+        <mass value="0.008582"/>
+        <inertia ixx="1.000000e-06" ixy="3.631986e-07" ixz="0.000000e+00"
+                 iyy="1.000000e-06" iyz="0.000000e+00" izz="1.070499e-06"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.284148 -0.095813 -0.036600" rpy="1.570796 0.000000 -0.448188"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Robrot_guarda.dae" scale="1 1 1"/>
+        </geometry>
+        <material name="Acero"/>
+      </visual>
+      <collision>
+        <origin xyz="0.284148 -0.095813 -0.036600" rpy="1.570796 0.000000 -0.448188"/>
+        <geometry>
+          <mesh filename="package://Robrot_description/meshes/Robrot/Robrot_guarda_collision.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Joints (internal to assembly) -->
+    <!-- Corregido como el robot real: d3 positivo = la cremallera BAJA.
+         d3 = 0.085 -> abajo del todo (home, final de carrera de Z); d3 = 0 -> 85 mm mas arriba. -->
+    <joint name="Corredera_9" type="prismatic">
+      <parent link="Brazo_2"/>
+      <child link="Cremallera2"/>
+      <origin xyz="-0.046614 -0.066564 0.362697" rpy="1.650854 1.570796 0.000000"/>
+      <axis xyz="1.000000 0.000000 0.000000"/>
+      <limit lower="0.000000" upper="0.085000" effort="100.0" velocity="0.15"/>
+    </joint>
+
+    <joint name="R_gida_11" type="fixed">
+      <parent link="Cremallera2"/>
+      <child link="carril"/>
+      <origin xyz="0.395197 -0.157958 0.000436" rpy="-3.141593 0.000000 0.000000"/>
+    </joint>
+
+    <!-- Corregido: el eje del servo pasa por el centro de su brazo (antes estaba ~30 cm afuera). -->
+    <joint name="Revoluci_n_12" type="revolute">
+      <parent link="carril"/>
+      <child link="union"/>
+      <origin xyz="0.000000 0.042600 0.070000" rpy="-1.570796 -1.570796 0.000000"/>
+      <axis xyz="0.000000 0.000000 1.000000"/>
+      <limit lower="0.000000" upper="1.570796" effort="100.0" velocity="0.20"/>
+    </joint>
+
+    <!-- Dedo de la pinza: 0 = cerrada, positivo = abre (hacia afuera). -->
+    <joint name="Corredera_13" type="prismatic">
+      <parent link="carril"/>
+      <child link="Robrot_grip"/>
+      <origin xyz="-0.122953 0.049600 -0.270802" rpy="0.000000 -1.570796 0.000000"/>
+      <axis xyz="-1.000000 0.000000 0.000000"/>
+      <limit lower="0.000000" upper="0.018000" effort="100.0" velocity="0.15"/>
+    </joint>
+
+    <!-- Dedo de la pinza: 0 = cerrada, positivo = abre (hacia afuera). -->
+    <joint name="Corredera_14" type="prismatic">
+      <parent link="carril"/>
+      <child link="Robrot_grip_2"/>
+      <origin xyz="0.005709 0.049600 0.401396" rpy="0.000000 1.570796 0.000000"/>
+      <axis xyz="-1.000000 0.000000 0.000000"/>
+      <limit lower="0.000000" upper="0.018000" effort="100.0" velocity="0.15"/>
+    </joint>
+
+    <!-- Biela de la pinza: fija al dedo (antes giraba libre y caia por gravedad). -->
+    <joint name="Revoluci_n_15" type="fixed">
+      <parent link="Robrot_grip"/>
+      <child link="Robrot_guarda_2"/>
+      <origin xyz="0.011376 -0.004000 -0.167730" rpy="-1.570796 0.000000 0.000000"/>
+    </joint>
+
+    <!-- Biela de la pinza: fija al dedo (antes giraba libre y caia por gravedad). -->
+    <joint name="Revoluci_n_17" type="fixed">
+      <parent link="Robrot_grip_2"/>
+      <child link="Robrot_guarda"/>
+      <origin xyz="0.606532 -0.004000 0.098771" rpy="1.570796 0.000000 -3.141593"/>
+    </joint>
+
+  
+
+  <!-- Mount joints (cross-assembly connections) -->
+  <!-- These define how assemblies connect to each other. -->
+  <!-- When swapping a dummy assembly with a real part, -->
+  <!-- update the include + macro call above, and adjust -->
+  <!-- parent/child link names in the mount joint below. -->
+
+  <!-- Corrección de orientación: el CAD viene con Y hacia arriba (Fusion).
+       Este link "world" gira TODO el robot +90° en X para que Y pase a ser Z (arriba). -->
+  <link name="world"/>
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+  </joint>
+
+  <joint name="Revoluci_n_6" type="revolute">
+    <parent link="base_link"/>
+    <child link="Brazo1_Unido"/>
+    <origin xyz="0.000000 0.159100 0.000000" rpy="-1.570796 0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <!-- limites reales: +46.1 grados = final de carrera del hombro (izquierda), -79.9 = tope derecho -->
+    <limit lower="-1.394000" upper="0.804000" effort="100.0" velocity="0.20"/>
+  </joint>
+
+  <joint name="Revoluci_n_7" type="revolute">
+    <parent link="Brazo1_Unido"/>
+    <child link="Brazo_2"/>
+    <origin xyz="-0.089300 -0.080100 0.000000" rpy="0.000000 0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <!-- limites reales: +134.5 grados = final de carrera del codo (izquierda); -45.5 = 180 grados mas alla (provisional) -->
+    <limit lower="-0.794000" upper="2.347000" effort="100.0" velocity="0.20"/>
+  </joint>
+
+  <!-- ===================== ros2_control (un solo sistema para todo el robot) ===================== -->
+  <!-- 6 joints: brazo (Revoluci_n_6, Revoluci_n_7, Corredera_9) + pinza (servo Revoluci_n_12 y dedos Corredera_13/14) -->
+  <ros2_control name="Robrot_system" type="system">
+    <hardware>
+      
+      
+        <plugin>mock_components/GenericSystem</plugin>
+      
+    </hardware>
+    <joint name="Revoluci_n_6">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Revoluci_n_7">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Corredera_9">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.080</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Revoluci_n_12">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Corredera_13">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+    <joint name="Corredera_14">
+      <command_interface name="position"/>
+      <command_interface name="velocity"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </ros2_control>
+
+  <!-- ===================== Plugin de Gazebo (solo con sim:=true) ===================== -->
+  
+
+</robot>
