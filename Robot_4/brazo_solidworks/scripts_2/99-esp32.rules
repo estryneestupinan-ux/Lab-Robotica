@@ -1,0 +1,13 @@
+# Regla udev: el ESP32 del SCARA R4 aparece siempre como /dev/esp32
+# (sin ella, el puerto cambia entre /dev/ttyUSB0, /dev/ttyUSB1... al reconectar).
+#
+# Instalación (una sola vez):
+#   sudo cp 99-esp32.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload-rules && sudo udevadm trigger
+#   ls -l /dev/esp32
+#
+# Revisar con `lsusb` qué adaptador USB-serial trae la placa y dejar la línea que corresponda.
+# CP210x (Silicon Labs), el de la mayoría de placas ESP32 DevKit V1:
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="esp32", MODE="0666"
+# CH340 (WCH):
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="esp32", MODE="0666"
