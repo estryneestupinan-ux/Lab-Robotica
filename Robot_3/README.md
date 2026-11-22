@@ -148,8 +148,6 @@ Documento: [Cinemática inversa y validación (PDF)](docs/cinematica_inversa.pdf
 
 Las trayectorias se generan en el espacio de articulaciones entre los puntos clave de la tarea: HOME, estación de llenado y estación de sellado. Cada articulación sigue un perfil de movimiento continuo que respeta los límites de velocidad del sistema y evita arranques y frenados bruscos durante el transporte del envase lleno.
 
-Documento: [Planeación de trayectorias (PDF)](docs/planeacion_trayectorias.pdf)
-
 ---
 
 ## Secuencia de operación
