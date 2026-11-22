@@ -1,16 +1,8 @@
 # Celda Robotizada de Envasado de Aceite
-
-Celda de cinco manipuladores que envasa aceite a **2 botellas por minuto**. Un nodo maestro en ROS 2 secuencia las operaciones y arbitra las zonas compartidas. La celda se validó en Gazebo y se replicó en físico con controladores ESP32.
-
-<p align="center">
-  <img src="media/images/render_celda.png" alt="Render de la celda completa" width="700">
-</p>
-
 ---
 
 ## Descripción
-
-La línea recibe el envase vacío, lo llena, lo transporta abierto, lo tapa y lo entrega. Cada paso lo hace un robot distinto, y todos se coordinan desde un único nodo maestro. Los robots no se comunican entre sí: reciben órdenes del maestro y le reportan su estado.
+Celda de cinco manipuladores que envasa aceite a **2 botellas por minuto**. Un nodo maestro en ROS 2 secuencia las operaciones y arbitra las zonas compartidas. La celda se validó en Gazebo y se replicó en físico con controladores ESP32. La línea recibe el envase vacío, lo llena, lo transporta abierto, lo tapa y lo entrega. Cada paso lo hace un robot distinto, y todos se coordinan desde un único nodo maestro. Los robots no se comunican entre sí: reciben órdenes del maestro y le reportan su estado.
 
 Documento: [Análisis del contexto (PDF)](docs/analisis_contexto.pdf)
 
