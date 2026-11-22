@@ -49,8 +49,15 @@ El proyecto abarca el análisis del contexto de la línea, la arquitectura del s
 | Robot que recibe | R4 (tapado) |
 
 <p align="center">
-  <img src="media/images/foto_robot3.jpg" alt="Robot 3" width="650">
+  <img width="1088" height="938" alt="Robot 3" src="https://github.com/user-attachments/assets/5a617699-13bc-4191-a304-9b62857d17de" />
 </p>
+
+
+
+### Video Robot IRL
+https://github.com/user-attachments/assets/bb6255e8-6ec9-482f-a3ae-68ecb273bba6
+
+
 
 ---
 
@@ -220,13 +227,25 @@ Archivo: [RVIZ.rar](ros2_ws/RVIZ.rar)
 
 ## Gazebo
 
-En Gazebo se simula el comportamiento físico del robot, con gravedad, inercias y colisiones. Sobre esta simulación se ejecutan las trayectorias planeadas en el espacio de articulaciones para validar el movimiento del robot entre la estación de llenado y la de sellado.
+En Gazebo se simula el comportamiento físico del robot, con gravedad, inercias y colisiones. Sobre esta simulación se ejecutan las trayectorias planeadas en el espacio articular, para validar que el robot lleva el envase de la estación de llenado (PLL) a la de sellado (PS) sin superar los límites de velocidad y manteniendo la pinza vertical.
+
+### Robot 3 individual
 
 <p align="center">
   <img src="media/images/gazebo_robot3.png" alt="Robot 3 en Gazebo" width="650">
 </p>
 
 Archivo: [GAZEBO.rar](ros2_ws/GAZEBO.rar)
+
+### Integración en la celda completa
+
+El Robot 3 también se simuló dentro de la celda completa de envasado, junto a los otros cuatro manipuladores. Un nodo maestro en ROS 2 coordina la secuencia y decide qué robot entra a cada zona compartida. En el video se ve a R3 recibir el envase lleno de R2 en PLL y llevarlo a PS, donde R4 lo tapa.
+
+
+
+https://github.com/user-attachments/assets/b5541e5b-ad29-474a-bef0-c1ec990cce00
+
+
 
 ---
 
@@ -242,4 +261,5 @@ Archivo: [GAZEBO.rar](ros2_ws/GAZEBO.rar)
 
 ## Cartilla
 
-**[Ver cartilla (PDF)](cartilla/cartilla_robot3.pdf)**
+[Cartilla_Scara_Jr_Grupo3.pdf](https://github.com/user-attachments/files/35244707/Cartilla_Scara_Jr_Grupo3.pdf)
+
