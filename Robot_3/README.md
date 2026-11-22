@@ -142,7 +142,7 @@ Código: [cinematica_directa.m](docs/C_directa/cinematica_directa.m)
 
 La cinemática inversa calcula los valores articulares necesarios para llevar la pinza a una posición deseada. En el plano XY, los ángulos del hombro y del codo se obtienen de forma geométrica a partir de la posición objetivo, considerando las dos configuraciones posibles del codo. El desplazamiento del eje Z se obtiene directamente de la altura requerida. La solución se validó comparando sus resultados con la cinemática directa en las posiciones de trabajo del robot.
 
-Documento: [Cinemática inversa y validación (PDF)](docs/cinematica_inversa.pdf) · Código: [C_indirecta](docs/C_indirecta/)
+Documento: [Cinemática inversa y validación (PDF)](docs/cinematica_inversa.pdf) · Código: [C_inversa](docs/C_inversa/)
 
 ### Trayectorias en el espacio articular
 
