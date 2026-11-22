@@ -190,7 +190,11 @@ El sistema eléctrico se centraliza en un ESP32, que controla los tres motores d
 Documento: [Planos eléctricos (PDF)](docs/planos_electricos.pdf)
 
 ---
+## Control
 
+Cada articulación cuenta con un lazo de control de bajo nivel, ejecutado en el ESP32, que usa la realimentación de su encoder para llevar el actuador a la posición indicada por la trayectoria. El informe presenta el modelado de los actuadores, el diseño y la sintonización de los controladores, y el análisis de la respuesta obtenida en cada articulación.
+
+---
 
 ## Modelo URDF
 
