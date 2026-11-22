@@ -209,7 +209,7 @@ El modelo URDF describe el robot para ROS 2 a partir del diseño CAD. Define los
   <img src="media/images/urdf_robot3.png" alt="Modelo URDF del Robot 3" width="600">
 </p>
 
-Archivo: [URDF.rar](ros2_ws/URDF.rar)
+Carpeta: [URDF](ros2_ws/URDF/)
 
 ---
 
@@ -221,7 +221,7 @@ En RViz se visualiza el modelo URDF del robot para verificar la estructura de es
   <img src="media/images/rviz_robot3.png" alt="Robot 3 en RViz" width="650">
 </p>
 
-Archivo: [RVIZ.rar](ros2_ws/RVIZ.rar)
+Carpeta: [RVIZ](ros2_ws/RVIZ/)
 
 ---
 
@@ -235,7 +235,7 @@ En Gazebo se simula el comportamiento físico del robot, con gravedad, inercias 
   <img src="media/images/gazebo_robot3.png" alt="Robot 3 en Gazebo" width="650">
 </p>
 
-Archivo: [GAZEBO.rar](ros2_ws/GAZEBO.rar)
+Carpeta: [GAZEBO](ros2_ws/GAZEBO/)
 
 ### Integración en la celda completa
 
