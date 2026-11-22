@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="urdfscarafinal">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.682323602376551 -1.3152179900719 0.884761539912474"
+        rpy="0 0 0" />
+      <mass
+        value="1.137388538902" />
+      <inertia
+        ixx="0.00526564832416153"
+        ixy="-2.2946428027443E-07"
+        ixz="-4.09847646544469E-06"
+        iyy="0.00526357966877929"
+        iyz="-2.68388365121582E-05"
+        izz="0.00886731668524446" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="Eslabon 1">
+    <inertial>
+      <origin
+        xyz="0.00055813401324134 0.0302776001024951 -0.0551187364399159"
+        rpy="0 0 0" />
+      <mass
+        value="0.267536684575569" />
+      <inertia
+        ixx="0.000790036756551328"
+        ixy="8.98846635067987E-07"
+        ixz="-8.67087542606865E-06"
+        iyy="0.000849667008789972"
+        iyz="-7.97361794895469E-07"
+        izz="8.65134375459744E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Eslabon1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Eslabon1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Eslabon 1"
+    type="revolute">
+    <origin
+      xyz="0.68312 -1.3169 0.98191"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="Eslabon 1" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="1"
+      velocity="10" />
+  </joint>
+  <link
+    name="Eslabon 2">
+    <inertial>
+      <origin
+        xyz="-0.000832765693134396 -0.017489927511086 -0.0856290474342722"
+        rpy="0 0 0" />
+      <mass
+        value="0.269253409281253" />
+      <inertia
+        ixx="0.000588880703510568"
+        ixy="5.09697515773785E-06"
+        ixz="-4.11090437701424E-05"
+        iyy="0.000587051425077224"
+        iyz="-2.69404462638968E-05"
+        izz="0.000111293639511705" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Eslabon2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Eslabon2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Eslabon 2"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.13"
+      rpy="0 0 3.1416" />
+    <parent
+      link="Eslabon 1" />
+    <child
+      link="Eslabon 2" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-2"
+      upper="2"
+      effort="1"
+      velocity="10" />
+  </joint>
+  <link
+    name="Prismatico">
+    <inertial>
+      <origin
+        xyz="-0.0438807524511623 -0.0059135308693794 -0.00504377383109089"
+        rpy="0 0 0" />
+      <mass
+        value="0.0422534240568587" />
+      <inertia
+        ixx="3.60687616262064E-06"
+        ixy="9.72938271655327E-07"
+        ixz="1.12217113284593E-08"
+        iyy="7.27685773134056E-05"
+        iyz="-7.99471249836618E-09"
+        izz="7.3127608904472E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Prismatico.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Prismatico.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Prismatico"
+    type="prismatic">
+    <origin
+      xyz="-0.0096314 0 -0.1473"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="Eslabon 2" />
+    <child
+      link="Prismatico" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="0"
+      upper="0.08"
+      effort="1"
+      velocity="10" />
+  </joint>
+  <link
+    name="Garra1">
+    <inertial>
+      <origin
+        xyz="0.00201714435350175 -0.0429227440209363 -0.00303594391943962"
+        rpy="0 0 0" />
+      <mass
+        value="0.0118398249648993" />
+      <inertia
+        ixx="6.04076407541767E-06"
+        ixy="-3.72386389621492E-12"
+        ixz="1.70179309332601E-12"
+        iyy="4.38541472833698E-07"
+        iyz="5.4518823164068E-07"
+        izz="5.74235889786076E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Garra1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Garra1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Garra1"
+    type="revolute">
+    <origin
+      xyz="0.0049617 -0.0425 -0.013431"
+      rpy="0.018401 0 0" />
+    <parent
+      link="Prismatico" />
+    <child
+      link="Garra1" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="0"
+      upper="1"
+      effort="1"
+      velocity="10" />
+  </joint>
+  <link
+    name="Garra2">
+    <inertial>
+      <origin
+        xyz="0.0025000010562638 -0.0485819660400175 0.00157350400013678"
+        rpy="0 0 0" />
+      <mass
+        value="0.0105626634838947" />
+      <inertia
+        ixx="5.50425489773698E-06"
+        ixy="7.70727532526121E-13"
+        ixz="2.35365621692407E-14"
+        iyy="2.72746174583354E-07"
+        iyz="-3.045689000602E-07"
+        izz="5.35990118879468E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Garra2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://urdfscarafinal/meshes/Garra2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Garra2"
+    type="revolute">
+    <origin
+      xyz="0.0049617 -0.0425 0.0035686"
+      rpy="0.018401 0 0" />
+    <parent
+      link="Prismatico" />
+    <child
+      link="Garra2" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="0"
+      upper="1"
+      effort="1"
+      velocity="10" />
+  </joint>
+</robot>
