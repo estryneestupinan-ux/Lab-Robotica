@@ -177,7 +177,7 @@ Documento: [Planeación de trayectorias (PDF)](docs/planeacion_trayectorias.pdf)
 
 ## Diseño mecánico y eléctrico
 
-Los planos mecánicos y eléctricos se elaboraron siguiendo las normas [nombre de las normas aplicadas].
+Los planos mecánicos y eléctricos se elaboraron siguiendo las normas ISO 5457 y IEC 60617.
 
 ### Diseño mecánico
 
