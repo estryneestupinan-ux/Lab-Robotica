@@ -349,3 +349,18 @@ https://github.com/user-attachments/assets/b5541e5b-ad29-474a-bef0-c1ec990cce00
 ## Cartilla
 
 [Cartilla_Scara_Jr_Grupo3.pdf](https://github.com/user-attachments/files/35244707/Cartilla_Scara_Jr_Grupo3.pdf)
+
+### Tiempo de ciclo teórico
+
+Calculado a partir de los parámetros del firmware (perfil trapezoidal, velocidades máximas de 60 °/s y 3 cm/s, velocidad de operación del 70 % y esperas de la pinza):
+
+| Tramo | Tiempo |
+|-------|--------|
+| HOME → PLL | 0.5 s |
+| AGARRE PLL (bajar, cerrar pinza) | 6.1 s |
+| PLL → PS (subir, girar 180°) | 10.8 s |
+| SOLTAR PS (bajar, abrir pinza) | 5.8 s |
+| PS → HOME | 10.3 s |
+| **Ciclo completo** | **≈ 33.5 s** (≈ 24 s al 100 % de velocidad) |
+
+El eje Z concentra cerca del 60 % del tiempo del ciclo. Con la velocidad al 100 %, el ciclo queda por debajo de los 30 s que exige la cadencia de la celda (2 botellas por minuto).
