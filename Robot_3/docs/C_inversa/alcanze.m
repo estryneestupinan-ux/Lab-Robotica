@@ -25,4 +25,4 @@ plot(YY, XX, '.', 'Color',[0.3 0.6 1], 'MarkerSize',3);
 plot(0,0,'ks','MarkerSize',12,'MarkerFaceColor','k');
 xlabel('Y [cm] (horizontal)'); ylabel('X [cm] (vertical)');
 title('Rango del robot (espacio de trabajo)');
-lim = L1+L2+5; xlim([-lim lim]); ylim([-lim lim]);
+lim = L1+L2+11; xlim([-lim lim]); ylim([-lim lim]);

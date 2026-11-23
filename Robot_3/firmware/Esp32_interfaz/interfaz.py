@@ -16,7 +16,6 @@ PUERTO_DEFECTO = 4210
 
 L1 = 13.0
 L2 = 15.0
-EF = 11.0
 M1_ARRIBA = 16.0 
 
 
