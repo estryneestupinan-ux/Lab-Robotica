@@ -350,6 +350,8 @@ https://github.com/user-attachments/assets/b5541e5b-ad29-474a-bef0-c1ec990cce00
 
 [Cartilla_Scara_Jr_Grupo3.pdf](https://github.com/user-attachments/files/35244707/Cartilla_Scara_Jr_Grupo3.pdf)
 
+---
+
 ### Tiempo de ciclo teórico
 
 Calculado a partir de los parámetros del firmware (perfil trapezoidal, velocidades máximas de 60 °/s y 3 cm/s, velocidad de operación del 70 % y esperas de la pinza):
