@@ -20,5 +20,7 @@ El proyecto contempla el diseño y modelado de los manipuladores, la simulación
 En este repositorio se encuentra el código fuente, los modelos robóticos, las simulaciones y la documentación técnica relacionada con el desarrollo del proyecto.
 
 ---
-
+## Link del notion 
+https://app.notion.com/p/Robotica-LAB-3f981e50011980319f40fb431ca19247
+---
 **Laboratorio de Robótica | Universidad Militar Nueva Granada.**
